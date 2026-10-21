@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Báo cáo an toàn – SiteSafe</title>
+  <meta name="description" content="Tổng hợp tình hình an toàn theo khoảng thời gian, khu vực và trạng thái: KPI, biểu đồ xu hướng, ma trận rủi ro, bảng kê hành động khắc phục, in và xuất CSV.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-root=".." data-role="manager" data-scr="09"
+      data-active="manager/manager-safety-report.html"
+      data-title="Báo cáo an toàn"
+      data-subtitle="Tổng hợp nguy cơ, hành động khắc phục và đợt kiểm tra theo kỳ, khu vực, trạng thái">
+
+  <div class="ss-app">
+    <aside id="ssSidebar" class="ss-sidebar"></aside>
+    <div class="ss-main">
+      <header id="ssTopbar" class="ss-topbar"></header>
+      <main class="ss-content">
+        <div class="offcanvas offcanvas-start d-lg-none ss-offcanvas" tabindex="-1" id="ssOffcanvasNav" aria-labelledby="ssOffcanvasTitle">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="ssOffcanvasTitle" style="color:#fff">Menu vai trò</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Đóng"></button>
+          </div>
+          <div class="offcanvas-body" id="ssOffcanvasBody"></div>
+        </div>
+
+        <!-- Đầu kỳ báo cáo + các nút xuất -->
+        <div class="card mb-3">
+          <div class="card-body py-3">
+            <div class="d-flex flex-wrap gap-2 justify-content-between align-items-start">
+              <div class="min-w-0">
+                <div class="ss-section-title">Báo cáo an toàn công trường</div>
+                <div class="ss-row-meta" id="repHead">Đang xác định kỳ báo cáo…</div>
+              </div>
+              <div class="d-flex flex-wrap gap-2">
+                <button type="button" class="btn btn-ghost btn-sm" id="btnPrint">
+                  <i class="bi bi-printer me-1"></i>In báo cáo
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" id="btnCsv">
+                  <i class="bi bi-filetype-csv me-1"></i>Xuất CSV
+                </button>
+              </div>
+            </div>
+            <div class="alert small mb-0 mt-3 py-2" style="background:#fdf3dd;border:1px solid #f2dda3;color:#92670a"
+                 role="note" id="simNote">
+              <i class="bi bi-hdd me-1"></i>
+              <strong>Bản mô phỏng:</strong> mọi con số dưới đây tính từ dữ liệu mẫu dựng sẵn đang lưu trong
+              LocalStorage của trình duyệt bạn (không có máy chủ, không phải số liệu công trường thật).
+              Nút <em>Khôi phục dữ liệu mẫu</em> ở menu “Dữ liệu” trên thanh tiêu đề sẽ đưa bộ đếm về đúng dữ liệu gốc.
+            </div>
+          </div>
+        </div>
+
+        <!-- Thông báo deep link từ bản đồ rủi ro -->
+        <div class="alert small d-none mb-3 py-2" id="deepLinkAlert" role="status"
+             style="background:var(--ss-teal-50);border:1px solid var(--ss-teal-100);color:var(--ss-teal-800)">
+          <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
+            <span><i class="bi bi-geo-alt me-1" style="color:var(--ss-teal-700)"></i>
+              Báo cáo đang được thu hẹp theo <strong id="deepLinkZone">—</strong> vì bạn mở từ
+              <a href="manager-zone-risk-map.html">Bản đồ rủi ro khu vực</a> (liên kết <code>?zone=</code>).
+            </span>
+            <button type="button" class="btn btn-ghost btn-sm" id="deepLinkClear">
+              <i class="bi bi-x-lg me-1"></i>Bỏ lọc khu vực
+            </button>
+          </div>
+        </div>
+
+        <!-- Bộ lọc -->
+        <div class="card mb-3">
+          <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
+            <span><i class="bi bi-funnel me-1"></i>Kỳ báo cáo &amp; bộ lọc</span>
+            <span class="small text-muted-soft text-end" id="windowLabel">—</span>
+          </div>
+          <div class="card-body py-3">
+            <div class="row g-2">
+              <div class="col-12 col-xl-6">
+                <span class="ss-section-title d-block mb-1" id="periodLabel">Khoảng thời gian</span>
+                <div class="btn-group flex-wrap" id="periodGroup" role="group" aria-labelledby="periodLabel">
+                  <button type="button" class="btn btn-ghost btn-sm" data-days="7" aria-pressed="false">7 ngày</button>
+                  <button type="button" class="btn btn-ghost btn-sm" data-days="30" aria-pressed="false">30 ngày</button>
+                  <button type="button" class="btn btn-ghost btn-sm" data-days="90" aria-pressed="false">90 ngày</button>
+                  <button type="button" class="btn btn-ghost btn-sm" data-days="0" aria-pressed="false">Toàn bộ</button>
+                  <button type="button" class="btn btn-ghost btn-sm" data-days="custom" aria-pressed="false">Tùy chọn</button>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <label class="ss-section-title d-block mb-1" for="fZone">Khu vực</label>
+                <select class="form-select form-select-sm" id="fZone" aria-label="Lọc theo khu vực"></select>
+              </div>
+              <div class="col-6 col-xl-3">
+                <label class="ss-section-title d-block mb-1" for="fStatus">Trạng thái báo cáo</label>
+                <select class="form-select form-select-sm" id="fStatus" aria-label="Lọc theo trạng thái nguy cơ"></select>
+              </div>
+            </div>
+            <div class="row g-2 mt-1">
+              <div class="col-6 col-md-3 col-xl-2">
+                <label class="form-label small mb-1" for="fFrom">Từ ngày</label>
+                <input type="date" class="form-control form-control-sm" id="fFrom">
+              </div>
+              <div class="col-6 col-md-3 col-xl-2">
+                <label class="form-label small mb-1" for="fTo">Đến ngày</label>
+                <input type="date" class="form-control form-control-sm" id="fTo">
+              </div>
+              <div class="col-6 col-md-3 col-xl-3">
+                <label class="form-label small mb-1" for="fGran">Thang thời gian biểu đồ</label>
+                <select class="form-select form-select-sm" id="fGran" aria-label="Thang thời gian của biểu đồ xu hướng">
+                  <option value="day">Theo ngày</option>
+                  <option value="week">Theo tuần</option>
+                </select>
+              </div>
+              <div class="col-6 col-md-3 col-xl-2 d-flex align-items-end">
+                <button type="button" class="btn btn-ghost btn-sm w-100" id="btnReset">
+                  <i class="bi bi-arrow-counterclockwise me-1"></i>Đặt lại bộ lọc
+                </button>
+              </div>
+              <div class="col-12 col-xl-3 d-flex align-items-end justify-content-xl-end">
+                <span class="ss-row-meta" id="matchCount">—</span>
+              </div>
+            </div>
+            <div class="small text-muted-soft mt-2 mb-0">
+              <span class="ss-badge" style="background:var(--ss-teal-50);color:var(--ss-teal-800);border:1px solid var(--ss-teal-100)"
+                    title="Mọi thẻ số, biểu đồ và bảng dưới đây chỉ dùng các báo cáo có ngày tạo nằm trong kỳ, đồng thời khớp khu vực và trạng thái đang chọn.">cách tính</span>
+              Kỳ được chốt theo <strong>ngày tạo báo cáo</strong> (nghĩa là <em>tổng báo cáo</em> = số ca phát sinh trong kỳ, không phải số ca còn tồn).
+              Hai ô ngày bỏ trống được hiểu là “dữ liệu sớm nhất” và “hôm nay”; tự động chuyển sang chế độ Tùy chọn khi bạn nhập.
+            </div>
+            <div class="alert small d-none mb-0 mt-3 py-2" id="badRange" role="alert"
+                 style="background:#fde7ea;border:1px solid #f5bfc6;color:#a82d3b">
+              <i class="bi bi-exclamation-octagon me-1"></i>Ngày bắt đầu lớn hơn ngày kết thúc nên kỳ báo cáo rỗng.
+              Vui lòng sửa hai ô “Từ ngày / Đến ngày” hoặc bấm <strong>Đặt lại bộ lọc</strong>.
+            </div>
+          </div>
+        </div>
+
+        <div id="noData" class="mb-3"></div>
+
+        <!-- KPI -->
+        <div class="mb-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+          <span class="ss-section-title">Chỉ số tổng hợp trong kỳ</span>
+          <span class="small text-muted-soft">
+            Tỷ lệ đóng = <em>Đã đóng ÷ tổng báo cáo trong kỳ</em>; hành động quá hạn = hạn &lt; hôm nay và chưa <em>Hoàn thành</em>;
+            mục ghi nhận trung bình = <em>tổng số mục ghi nhận ÷ số đợt kiểm tra</em>.
+          </span>
+        </div>
+        <div class="row g-3 mb-3" id="kpis"></div>
+
+        <!-- Biểu đồ -->
+        <div class="row g-3">
+          <div class="col-12 col-xl-8">
+            <div class="card h-100">
+              <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
+                <span><i class="bi bi-graph-up-arrow me-1"></i>Xu hướng số ca nguy cơ mới</span>
+                <span class="small text-muted-soft" id="trendNote">—</span>
+              </div>
+              <div class="card-body">
+                <div id="chartTrend"></div>
+                <div class="small text-muted-soft mt-2 mb-0">
+                  <span class="ss-badge" style="background:var(--ss-teal-50);color:var(--ss-teal-800);border:1px solid var(--ss-teal-100)"
+                        title="Đếm số báo cáo có ngày tạo rơi vào từng mốc; mốc tuần gom 7 ngày liên tiếp bắt đầu từ ngày đầu kỳ.">cách tính</span>
+                  Mỗi mốc = số báo cáo khởi tạo trong ngày (hoặc trong 7 ngày của tuần đó). Kỳ dài trên 60 ngày sẽ tự chuyển sang thang tuần cho dễ đọc.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-xl-4">
+            <div class="card h-100">
+              <div class="card-header"><i class="bi bi-pie-chart me-1"></i>Phân bố theo mức độ</div>
+              <div class="card-body">
+                <div id="chartLevel"></div>
+                <div class="small text-muted-soft mt-2 mb-0">
+                  <span class="ss-badge" style="background:var(--ss-teal-50);color:var(--ss-teal-800);border:1px solid var(--ss-teal-100)"
+                        title="Đếm mọi báo cáo trong kỳ theo trường mức độ; mức độ lấy theo thang Thấp / Trung bình / Cao / Nghiêm trọng của dữ liệu mẫu.">cách tính</span>
+                  Đếm theo mức độ cán bộ an toàn đã chốt; mức đang mở và mức đã đóng đều được tính.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mt-0">
+          <div class="col-12 col-lg-5">
+            <div class="card h-100">
+              <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
+                <span><i class="bi bi-bar-chart me-1"></i>Top khu vực theo điểm rủi ro</span>
+                <span class="small text-muted-soft" id="zoneCount">—</span>
+              </div>
+              <div class="card-body">
+                <div id="chartZone"></div>
+                <div id="zoneBreak"></div>
+                <div class="small text-muted-soft mt-2 mb-0">
+                  <span class="ss-badge" style="background:var(--ss-teal-50);color:var(--ss-teal-800);border:1px solid var(--ss-teal-100)"
+                        title="Điểm rủi ro khu vực = tổng trọng số mức độ (Thấp 1, Trung bình 2, Cao 3, Nghiêm trọng 5) của nguy cơ đang mở + 2 lần số hành động quá hạn + số ca mới trong 7 ngày gần nhất.">cách tính</span>
+                  <strong>Điểm rủi ro = trọng số mức độ nguy cơ đang mở + 2 × số hành động quá hạn + số ca mới 7 ngày</strong>
+                  (trọng số Thấp 1 · Trung bình 2 · Cao 3 · Nghiêm trọng 5; “7 ngày gần nhất” tính đến hôm nay).
+                  Cùng công thức với bản đồ rủi ro, nhưng chỉ đếm dữ liệu nằm trong kỳ &amp; bộ lọc đang chọn.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4">
+            <div class="card h-100">
+              <div class="card-header"><i class="bi bi-grid-3x3 me-1"></i>Ma trận rủi ro 5×5</div>
+              <div class="card-body">
+                <div id="chartMatrix"></div>
+                <div id="matrixFoot" class="small text-muted-soft mt-2 mb-0"></div>
+                <div class="small text-muted-soft mt-2 mb-0">
+                  <span class="ss-badge" style="background:var(--ss-teal-50);color:var(--ss-teal-800);border:1px solid var(--ss-teal-100)"
+                        title="Hậu quả = trọng số mức độ (Thấp 1, Trung bình 2, Cao 3, Nghiêm trọng 5). Khả năng = bậc ưu tiên Thấp 1 / Vừa 2 / Cao 3 / Khẩn cấp 4, cộng 1 nếu báo cáo chưa có hành động khắc phục, tối đa 5.">cách tính</span>
+                  Hậu quả theo <em>mức độ</em>; khả năng theo <em>mức ưu tiên</em> (+1 bậc nếu chưa giao hành động khắc phục).
+                  Bấm vào ô có số để xem mã báo cáo trong ô đó.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-3">
+            <div class="card h-100">
+              <div class="card-header"><i class="bi bi-clipboard-check me-1"></i>Cơ cấu trạng thái</div>
+              <div class="card-body">
+                <div id="chartStatus"></div>
+                <div class="small text-muted-soft mt-2 mb-0">
+                  <span class="ss-badge" style="background:var(--ss-teal-50);color:var(--ss-teal-800);border:1px solid var(--ss-teal-100)"
+                        title="Đếm báo cáo trong kỳ theo trạng thái xử lý; trạng thái lấy đúng danh mục statuses.hazard của dữ liệu mẫu.">cách tính</span>
+                  Theo đúng danh mục trạng thái dùng trong hệ thống.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bảng nhóm nguy cơ lặp lại -->
+        <div class="card mt-3">
+          <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
+            <span><i class="bi bi-collection me-1"></i>Nhóm nguy cơ lặp lại nhiều nhất</span>
+            <span class="small text-muted-soft" id="catCount">—</span>
+          </div>
+          <div class="card-body p-0" id="catTable"></div>
+          <div class="card-body pt-2">
+            <div class="small text-muted-soft mb-0">
+              <span class="ss-badge" style="background:var(--ss-teal-50);color:var(--ss-teal-800);border:1px solid var(--ss-teal-100)"
+                    title="Số ca = báo cáo trong kỳ thuộc nhóm; đang mở = chưa Đóng/Bị từ chối; mức nặng nhất = mức độ có trọng số lớn nhất trong nhóm; khu vực nhiều nhất = khu vực có nhiều ca nhất trong nhóm.">cách tính</span>
+              Xếp hạng theo <em>số ca trong kỳ</em>; “mức nặng nhất” so theo trọng số mức độ, “khu vực nhiều nhất” đếm số ca theo khu vực.
+            </div>
+          </div>
+        </div>
+
+        <!-- Bảng hành động khắc phục -->
+        <div class="card mt-3">
+          <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
+            <span><i class="bi bi-tools me-1"></i>Bảng kê hành động khắc phục</span>
+            <span class="small text-muted-soft" id="actCount">—</span>
+          </div>
+          <div class="card-body p-0" id="actTable"></div>
+          <div class="card-body pt-2">
+            <div class="small text-muted-soft mb-0">
+              <span class="ss-badge" style="background:var(--ss-teal-50);color:var(--ss-teal-800);border:1px solid var(--ss-teal-100)"
+                    title="Danh sách hành động gắn với các báo cáo khớp bộ lọc. Số ngày trễ = hôm nay trừ hạn (đã tính trọn ngày 23:59 của ngày hạn); hành động Hoàn thành không bị tính trễ.">cách tính</span>
+              <strong>Số ngày trễ = hôm nay − hạn xử lý</strong> (không tính cho hành động đã <em>Hoàn thành</em>).
+              Bảng chỉ liệt kê hành động của các báo cáo khớp bộ lọc hiện hành.
+            </div>
+          </div>
+        </div>
+
+        <div id="ssOwnerNote" class="mt-4"></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/modules/seed-data.js"></script>
+  <script src="../js/modules/store.js"></script>
+  <script src="../js/modules/app.js"></script>
+  <script src="../js/modules/charts.js"></script>
+  <script src="../js/pages/manager-safety-report.js"></script>
+</body>
+</html>

@@ -42,51 +42,72 @@
 
 > Các tính năng AI có thể được mô phỏng bằng quy tắc JavaScript và dữ liệu JSON. Không được giới thiệu kết quả mô phỏng là kết quả từ một mô hình AI hoặc API thật nếu dự án không thực sự gọi dịch vụ đó. Người dùng cần có quyền xem xét, sửa, chấp nhận hoặc từ chối đề xuất.
 
-## 5. Công nghệ dự kiến
+## 5. Công nghệ sử dụng
 
-- **HTML:** cấu trúc nội dung và biểu mẫu.
-- **CSS:** bố cục, thành phần giao diện và responsive.
-- **JavaScript:** xử lý sự kiện, DOM, tìm kiếm, lọc, kiểm tra dữ liệu và luồng nghiệp vụ.
-- **JSON / LocalStorage:** dữ liệu giả lập và lưu trạng thái ở trình duyệt.
-- **Git / GitHub:** quản lý phiên bản, nhánh và yêu cầu hợp nhất (Pull Request).
-- **Figma / Canva:** thiết kế giao diện trước khi lập trình.
-- **OBS:** ghi video minh chứng quá trình thực hiện từng giao diện theo yêu cầu môn học.
+- **HTML:** cấu trúc nội dung và biểu mẫu cho 16 trang.
+- **CSS + Bootstrap 5.3.3:** lưới, thành phần và responsive; `assets/css/styles.css` định nghĩa design system (biến màu, badge trạng thái, card, bản đồ, timeline).
+- **JavaScript (ES5 thuần, không framework):** sự kiện, DOM, tìm kiếm, lọc, validation, kéo–thả HTML5, FileReader + canvas cho ảnh minh chứng, SVG tự vẽ biểu đồ và bản đồ.
+- **JSON / LocalStorage:** `js/modules/seed-data.js` dựng dữ liệu mẫu, `js/modules/store.js` đọc/ghi và suy dẫn các giá trị nghiệp vụ (điểm rủi ro, quá hạn, thống kê).
+- **Phiên đăng nhập mô phỏng ở trình duyệt:** biểu mẫu `login.html` kiểm tra tên đăng nhập/mật khẩu theo bộ luật đặt tài khoản, băm mật khẩu bằng FNV-1a (chỉ để minh họa), đếm lần sai và khóa tạm 30 giây trong `sitesafe.auth.v3`; phiên lưu ở `sitesafe.session.v3`. Không có máy chủ, không có API xác thực.
+- **Bootstrap Icons 1.11.3:** biểu tượng.
+- **Git / GitHub:** quy trình đã mô tả ở mục 9; kho mã hiện chưa khởi tạo, nhóm cần `git init`, tạo nhánh `dev` và nộp theo PR.
+- **Figma / Canva:** bản mô phỏng nằm ở liên kết trong `design/figma-link.txt`.
+- **OBS:** chưa ghi; mỗi màn hình cần một video theo mục 8.
 
 ## 6. Cấu trúc thư mục
 
-Cấu trúc thực tế của kho mã nguồn cần được cập nhật theo các thư mục và tệp đang có trong dự án. Dựa trên cấu trúc hiện tại:
-
 ```text
-project-root/
-├── README.md
-├── admin/                 # Giao diện quản trị viên
-├── assets/                # Hình ảnh, biểu tượng và tài nguyên
-├── design/                # Figma/Canva, wireframe và bản mô phỏng
-├── doc/                   # Tài liệu bổ sung (cần kiểm tra nội dung)
-├── docs/                  # Tài liệu phân tích và quản lý dự án
-│   ├── project-proposal.md
-│   ├── roles-and-features.md
-│   ├── screen-list.md
-│   ├── team-assignment.md
-│   └── ai-usage-report.md
-├── js/
-│   └── modules/           # Các mô-đun JavaScript dùng chung
-├── manager/               # Giao diện quản lý công trường
-├── safety/                # Giao diện cán bộ an toàn
-└── worker/                # Giao diện nhân sự hiện trường
+SiteSafe_demo/
+├── index.html                 # Trang giới thiệu dự án + 4 vai trò
+├── login.html                 # Đăng nhập bằng tên tài khoản + mật khẩu demo
+├── 403.html / 404.html        # Chặn vai trò / sai đường dẫn
+├── worker/                    # SCR-01 checklist · SCR-02 báo nguy cơ · SCR-03 báo cáo của tôi
+├── safety/                    # SCR-04 bảng xem xét · SCR-05 chi tiết nguy cơ · SCR-06 đợt kiểm tra
+├── manager/                   # SCR-07 bản đồ rủi ro · SCR-08 hành động khắc phục · SCR-09 báo cáo an toàn
+├── admin/                     # SCR-10 mẫu checklist · SCR-11 khu vực · SCR-12 tài khoản
+├── assets/css/styles.css      # Design system tông xanh ngọc + các thành phần dùng chung
+├── js/modules/                # seed-data.js · store.js · app.js · charts.js · ai.js
+├── js/pages/                  # Một file script cho mỗi trang (16 file)
+├── docs/                      # proposal, roles-and-features, screen-list, team-assignment, ai-usage-report
+└── design/figma-link.txt      # Liên kết bản mô phỏng Figma
 ```
 
-Đây là mô tả theo cấu trúc nhìn thấy trong VS Code, không khẳng định mọi tệp con đã tồn tại. Nếu CSS, dữ liệu hoặc trang HTML đang được đặt ở vị trí khác, hãy cập nhật phần này để khớp với kho mã nguồn thực tế.
+Toàn bộ ứng dụng là frontend thuần: không có build step, không có máy chủ, không có thư viện JavaScript ngoài Bootstrap 5.3.3 và Bootstrap Icons 1.11.3 (nạp qua CDN).
 
 ## 7. Cách chạy dự án
 
 1. Mở thư mục dự án trong Visual Studio Code.
-2. Kiểm tra `README.md`, `docs/screen-list.md` và các thư mục theo vai trò để xác định trang bắt đầu.
-3. Mở tệp HTML có sẵn cần chạy.
-4. Có thể dùng tiện ích **Live Server** trong VS Code: nhấn chuột phải vào tệp HTML rồi chọn **Open with Live Server**.
-5. Kiểm tra các chức năng trên trình duyệt: điều hướng, biểu mẫu, tìm kiếm/lọc, trạng thái dữ liệu và responsive.
+2. Mở `index.html` hoặc `login.html` trực tiếp bằng trình duyệt (nhấp đúp file), hoặc dùng tiện ích **Live Server** nếu muốn: chuột phải vào tệp HTML → **Open with Live Server**.
+3. Ở màn hình đăng nhập, nhập tên đăng nhập + mật khẩu của một vai trò. Bảng **Tài khoản demo** bên dưới liệt kê đủ 10 tài khoản; bấm **Điền** để nạp nhanh vào ô (vẫn phải bấm **Đăng nhập**).
 
-Nếu dự án chưa có trang `index.html`, hãy xác định trang vào hệ thống trong bảng kiểm kê màn hình trước khi tạo trang mới. Không tự giả định đường dẫn trang chủ khi chưa kiểm tra mã nguồn.
+| Vai trò | Tên đăng nhập | Mật khẩu demo | Sinh viên phụ trách |
+|---|---|---|---|
+| Nhân sự hiện trường (`worker`) | `maingoc` | `Worker@2026` | SV1 – Lê Thị Mai Ngọc |
+| Cán bộ an toàn (`safety`) | `thao.nguyen` | `AnToan@2026` | SV2 – Nguyễn Thị Thảo |
+| Quản lý công trường (`manager`) | `nhung.do` | `ChiHuy@2026` | SV3 – Đỗ Hồng Nhung |
+| Quản trị viên (`admin`) | `quantri` | `Admin@2026` | SV3 – Đỗ Hồng Nhung |
+
+Tài khoản demo bổ sung: `gia.han`, `kieu.anh` (worker), `hoai.nam` (safety), `quoc.bao` (manager) dùng cùng mật khẩu theo vai trò; `minh.chau` và `thanh.truc` bị vô hiệu hóa để demo luồng “tài khoản không còn hoạt động”.
+
+**Luật tên đăng nhập:** 6–20 ký tự, viết thường không dấu, bắt đầu bằng chữ cái, chỉ dùng `a-z` `0-9` `. _ -`, không kết thúc bằng ký tự đặc biệt, không có hai ký tự đặc biệt liền nhau, không trùng tài khoản đã có.
+**Luật mật khẩu:** 8–24 ký tự, đủ 4 nhóm (hoa, thường, số, ký tự đặc biệt `!@#$%^&*_-.`), không chứa tên đăng nhập, không lặp một ký tự ba lần liền, không thuộc danh sách dễ đoán (`password`, `12345678`, `sitesafe`, …).
+**Khóa tạm:** nhập sai 5 lần liên tiếp thì tài khoản bị khóa 30 giây, màn hình đếm ngược và không cho gửi. **Bắt buộc đổi mật khẩu:** mật khẩu do quản trị viên đặt (`SCR-12`) bị đánh dấu `mustChange`, lần đăng nhập đầu mở hộp thoại đổi mật khẩu không thể bỏ qua.
+
+Mật khẩu chỉ là cơ chế minh họa của nguyên mẫu: băm FNV-1a theo tên đăng nhập, lưu trong LocalStorage, không có máy chủ hay vận chuyển qua mạng — không dùng cho hệ thống thật.
+
+4. Data mẫu nằm trong `js/modules/seed-data.js` và được nhân bản vào LocalStorage với khóa `sitesafe.db.v3` (trường `version` = 4; tăng version sẽ tự nạp lại dữ liệu gốc). Nút **Khôi phục dữ liệu mẫu** ở thanh trên (trang đăng nhập cũng có) sẽ đưa dữ liệu về trạng thái gốc sau khi thử.
+5. Kiểm tra: điều hướng theo vai trò, biểu mẫu và validation, kéo–thả bảng xem xét, lọc/biểu đồ, bản đồ rủi ro, và các deep link `?id=` / `?zone=` / `?focus=` / `?show=`.
+6. Kiểm tra tầng tài khoản: đăng nhập sai 5 lần → khóa tạm 30 giây có đếm ngược; tài khoản `active: false` (`minh.chau`, `thanh.truc`) bị chặn; menu người dùng → **Đổi mật khẩu**; SCR-12 thêm tài khoản kèm mật khẩu khởi tạo → lần đăng nhập đầu buộc đổi.
+
+Ứng dụng chạy được cả khi mở từ `file://` (không cần máy chủ), nhưng một số trình duyệt hạn chế `localStorage` trên `file://`; nếu thấy dữ liệu không lưu, hãy dùng Live Server.
+
+### 7.1. Ba tính năng nổi bật theo từng sinh viên
+
+| Sinh viên | Màn hình | Tính năng nổi bật | Điểm kiểm chứng |
+|---|---|---|---|
+| SV1 – Lê Thị Mai Ngọc | SCR-02 | **Hazard Report Composer:** soạn báo cáo kèm ảnh minh chứng (nén bằng canvas), AI-01 gợi ý nhóm nguy cơ + mức độ + biện pháp, người dùng sửa/chấp nhận/từ chối, có lưu bản nháp | Thay mô tả, chạy lại phân loại, kiểm tra giải thích và độ khớp; tải ảnh và xem thumbnail |
+| SV2 – Nguyễn Thị Thảo | SCR-04 + SCR-05 | **Triage board kéo–thả:** 5 cột trạng thái, kéo thẻ là đổi trạng thái kèm hàng rào nghiệp vụ (không đóng khi còn hành động mở, bắt buộc ghi chú khi từ chối), mọi lần đổi đều ghi lịch sử | Kéo thẻ bằng chuột, thử đóng báo cáo còn hành động, mở SCR-05 đọc timeline |
+| SV3 – Đỗ Hồng Nhung | SCR-07 | **Sơ đồ công trường SVG tương tác:** lớp nhiệt rủi ro theo khu vực, vòng xung nháy cho nguy cơ Nghiêm trọng, ma trận 5×5 bấm được, AI-03 xếp hạng điểm nóng và công khai công thức tính điểm | Bật/tắt lớp nhiệt, bấm ô ma trận, đối chiếu bảng xếp hạng với danh sách nguy cơ thật |
 
 ## 8. Yêu cầu hoàn thiện mỗi giao diện
 
@@ -148,5 +169,5 @@ Tệp `docs/ai-usage-report.md` phải ghi rõ công cụ AI đã dùng, prompt 
 
 ---
 
-**Trạng thái:** Đang phát triển  
+**Trạng thái:** 12 màn hình nghiệp vụ + 4 trang phụ trợ đã hoàn thành và kiểm thử trên trình duyệt (21/10/2026); còn thiếu review qua Pull Request và video OBS.  
 **Tên dự án:** SiteSafe – Theo dõi an toàn công trường

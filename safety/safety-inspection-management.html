@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quản lý đợt kiểm tra – SiteSafe</title>
+  <meta name="description" content="Lập kế hoạch, theo dõi và đóng các đợt kiểm tra an toàn tại công trường.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-root=".." data-role="safety" data-scr="06"
+      data-active="safety/safety-inspection-management.html"
+      data-title="Quản lý đợt kiểm tra"
+      data-subtitle="Lập kế hoạch, phân công người kiểm tra và cập nhật kết quả từng đợt">
+
+  <div class="ss-app">
+    <aside id="ssSidebar" class="ss-sidebar"></aside>
+    <div class="ss-main">
+      <header id="ssTopbar" class="ss-topbar"></header>
+      <main class="ss-content">
+        <div class="offcanvas offcanvas-start d-lg-none ss-offcanvas" tabindex="-1" id="ssOffcanvasNav" aria-labelledby="ssOffcanvasTitle">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="ssOffcanvasTitle" style="color:#fff">Menu vai trò</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Đóng"></button>
+          </div>
+          <div class="offcanvas-body" id="ssOffcanvasBody"></div>
+        </div>
+
+        <div class="row g-3 mb-3" id="kpis"></div>
+
+        <div class="ss-ai mb-3">
+          <div class="ss-ai-head"><i class="bi bi-fire ss-ai-spark"></i>
+            <div class="flex-grow-1"><strong>AI-03 gợi ý trọng tâm kiểm tra</strong>
+              <div class="ss-ai-note">Risk Hotspot Insight (mô phỏng bằng bộ luật JavaScript)</div></div>
+            <span class="ss-ai-badge"><i class="bi bi-flask"></i>Mô phỏng</span>
+            <button class="btn btn-soft btn-sm" id="aiPlan"><i class="bi bi-magic me-1"></i>Lập đợt kiểm tra theo gợi ý</button>
+          </div>
+          <div class="ss-ai-body" id="aiInsight"></div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body py-3">
+            <div class="row g-2 align-items-end">
+              <div class="col-md-4">
+                <label class="form-label small mb-1" for="q">Tìm kiếm</label>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text"><i class="bi bi-search"></i></span>
+                  <input class="form-control" id="q" placeholder="Theo mã, tên đợt kiểm tra, ghi chú…">
+                </div>
+              </div>
+              <div class="col-6 col-md-2">
+                <label class="form-label small mb-1" for="fStatus">Trạng thái</label>
+                <select class="form-select form-select-sm" id="fStatus"></select>
+              </div>
+              <div class="col-6 col-md-2">
+                <label class="form-label small mb-1" for="fZone">Khu vực</label>
+                <select class="form-select form-select-sm" id="fZone"></select>
+              </div>
+              <div class="col-6 col-md-2">
+                <label class="form-label small mb-1" for="fType">Hình thức</label>
+                <select class="form-select form-select-sm" id="fType"></select>
+              </div>
+              <div class="col-6 col-md-2 d-flex align-items-end justify-content-between gap-2">
+                <button class="btn btn-ghost btn-sm" id="clearFilter" type="button"><i class="bi bi-x-lg me-1"></i>Xóa lọc</button>
+                <span class="ss-row-meta" id="rowCount">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
+            <span><i class="bi bi-calendar2-check me-1"></i>Danh sách đợt kiểm tra</span>
+            <button class="btn btn-primary btn-sm" id="newBtn"><i class="bi bi-plus-lg me-1"></i>Tạo đợt kiểm tra</button>
+          </div>
+          <div class="card-body p-0" id="listHost"></div>
+          <div class="card-footer small text-muted-soft d-flex flex-wrap gap-2 justify-content-between">
+            <span><i class="bi bi-info-circle me-1"></i>Trạng thái dùng theo quy trình chốt: Bản nháp → Đang thực hiện → Đã gửi → Đã xem xét → Hoàn tất.</span>
+            <span>Bản nháp có thể sửa hoặc hủy; đợt đã gửi chỉ cập nhật kết quả.</span>
+          </div>
+        </div>
+
+        <div id="ssOwnerNote" class="mt-4"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- modal tạo / sửa -->
+  <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <form class="modal-content" id="inspForm" novalidate>
+        <input type="hidden" id="fId">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formTitle">Tạo đợt kiểm tra</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label" for="fName">Tên đợt kiểm tra <span class="text-danger">*</span></label>
+              <input class="form-control" id="fName" maxlength="110" required placeholder="Ví dụ: Kiểm tra giàn giáo tháp A tuần 42">
+              <div class="invalid-feedback">Hãy đặt tên rõ ràng, tối thiểu 8 ký tự.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="fZoneInput">Khu vực <span class="text-danger">*</span></label>
+              <select class="form-select" id="fZoneInput" required></select>
+              <div class="invalid-feedback">Chọn khu vực còn hoạt động.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="fDate">Ngày kiểm tra <span class="text-danger">*</span></label>
+              <input class="form-control" type="date" id="fDate" required>
+              <div class="invalid-feedback" id="fDateErr">Chọn ngày không quá 7 ngày trong quá khứ.</div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="fTypeInput">Hình thức</label>
+              <select class="form-select" id="fTypeInput"></select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="fInspector">Người phụ trách <span class="text-danger">*</span></label>
+              <select class="form-select" id="fInspector" required></select>
+              <div class="invalid-feedback">Chọn cán bộ an toàn còn hoạt động.</div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="fTemplate">Mẫu checklist <span class="text-danger">*</span></label>
+              <select class="form-select" id="fTemplate" required></select>
+              <div class="invalid-feedback">Chọn mẫu còn hiệu lực.</div>
+            </div>
+            <div class="col-12">
+              <div class="ss-section-title mb-2">Nội dung mẫu sẽ dùng</div>
+              <div class="small text-muted-soft mb-2" id="tplPreview">—</div>
+              <div class="d-flex flex-wrap gap-2 align-items-center">
+                <span class="ss-row-meta">Số mục ghi nhận:</span>
+                <input class="form-control form-control-sm" id="fFindings" type="number" min="0" max="99" style="width:110px" value="0" aria-label="Số mục ghi nhận">
+                <span class="ss-row-meta" id="zoneRiskHint"></span>
+              </div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="fNote">Ghi chú / trọng tâm</label>
+              <textarea class="form-control" id="fNote" rows="2" placeholder="Vị trí cần đo kiểm, yêu cầu dừng việc, đầu mối đi cùng…"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Hủy bỏ</button>
+          <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Lưu đợt kiểm tra</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/modules/seed-data.js"></script>
+  <script src="../js/modules/store.js"></script>
+  <script src="../js/modules/app.js"></script>
+  <script src="../js/modules/charts.js"></script>
+  <script src="../js/modules/ai.js"></script>
+  <script src="../js/pages/safety-inspection-management.js"></script>
+</body>
+</html>

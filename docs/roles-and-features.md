@@ -1,6 +1,6 @@
 ## 1. Mục đích
 
-Tài liệu xác định trách nhiệm và chức năng chính của bốn vai trò trong SiteSafe. Quyền hạn dưới đây là quy tắc nghiệp vụ dự kiến cho nguyên mẫu Frontend; nhóm cần thống nhất cách mô phỏng đăng nhập và phân quyền khi tích hợp.
+Tài liệu xác định trách nhiệm và chức năng chính của bốn vai trò trong SiteSafe. Quyền hạn dưới đây là quy tắc nghiệp vụ dự kiến cho nguyên mẫu Frontend; cách mô phỏng đăng nhập và phân quyền đã chốt ở mục 3.1.
 
 ## 2. Vai trò và chức năng
 
@@ -51,7 +51,7 @@ Tài liệu xác định trách nhiệm và chức năng chính của bốn vai 
 
 - Xem và quản lý mẫu checklist.
 - Tạo, sửa, vô hiệu hóa hoặc lưu trữ khu vực công trường.
-- Xem, tạo, sửa và vô hiệu hóa tài khoản mô phỏng.
+- Xem, tạo, sửa và vô hiệu hóa tài khoản mô phỏng; đặt tên đăng nhập theo luật và gán mật khẩu khởi tạo (hoặc mật khẩu tạm khi đặt lại) cho người dùng.
 - Tìm kiếm/lọc dữ liệu quản trị.
 - Kiểm tra dữ liệu đầu vào trước khi lưu.
 - Dùng Checklist Generator để tạo bản nháp checklist theo loại công việc; cần xem lại trước khi áp dụng.
@@ -75,6 +75,22 @@ Ký hiệu: **✓** = có thể thực hiện trong phạm vi vai trò; **—** 
 | Quản lý khu vực | — | — | Xem | ✓ |
 | Quản lý tài khoản | — | — | — | ✓ |
 | Xem báo cáo tổng hợp | Cá nhân | ✓ | ✓ | Khi cần |
+
+### 3.1. Quy tắc tài khoản và đăng nhập
+
+Đăng nhập chạy hoàn toàn ở trình duyệt (`login.html` + `SiteSafeStore.authenticate`): nhập tên đăng nhập và mật khẩu, không còn nút chọn nhanh vai trò.
+
+| Quy tắc | Nội dung áp dụng trong nguyên mẫu |
+|---|---|
+| Tên đăng nhập | 6–20 ký tự, viết thường không dấu, bắt đầu bằng chữ cái, chỉ dùng `a-z` `0-9` `. _ -`, không kết thúc bằng ký tự đặc biệt, không có hai ký tự đặc biệt liền nhau, không trùng tài khoản đang tồn tại |
+| Mật khẩu | 8–24 ký tự, đủ 4 nhóm (chữ hoa, chữ thường, chữ số, ký tự đặc biệt `!@#$%^&*_-.`), không chứa tên đăng nhập, không lặp một ký tự ba lần liền, không thuộc danh sách dễ đoán |
+| Khóa tạm | 5 lần sai liên tiếp → khóa 30 giây theo từng tên đăng nhập, màn hình đếm ngược và chặn gửi (bộ đếm ở `sitesafe.auth.v3`) |
+| Đặt mật khẩu hộ | Quản trị viên thêm tài khoản hoặc đặt lại mật khẩu ở SCR-12 → tài khoản bị đánh dấu `mustChange`, lần đăng nhập đầu mở hộp thoại đổi mật khẩu không thể bỏ qua (chỉ có nút Đăng xuất) |
+| Đổi mật khẩu | Mục **Đổi mật khẩu** trong menu người dùng ở thanh trên: kiểm mật khẩu hiện tại, áp dụng cùng bộ luật, mật khẩu mới phải khác mật khẩu cũ |
+| Tài khoản vô hiệu hóa | `active: false` thì màn hình đăng nhập báo “đã bị vô hiệu hóa” và không tạo phiên |
+| Đổi vai trò | Không còn đăng nhập hộ: menu người dùng đưa về `login.html?switch=1` (xóa phiên cũ), trang `403.html` đưa tới `login.html?switch=1&next=<màn hình cần quyền>` |
+
+Bản rõ các mật khẩu demo nằm trong `js/modules/seed-data.js` để nhóm biết dùng gì khi quay video; khi nạp vào LocalStorage, `store.js` băm theo tên đăng nhập (FNV-1a bốn vòng) và xóa bản rõ. Bảng credentials và giải thích đầy đủ ở mục 7 của `README.md`. Đây là cơ chế minh họa cho nguyên mẫu học tập — không có máy chủ, không có vận chuyển qua mạng, không phải giải pháp bảo mật.
 
 ## 4. Quy tắc trạng thái nghiệp vụ gợi ý
 

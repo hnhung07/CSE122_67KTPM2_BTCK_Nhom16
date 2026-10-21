@@ -31,7 +31,7 @@
 | SCR-09 | Manager | Báo cáo an toàn | Tổng hợp tình hình theo thời gian, khu vực hoặc trạng thái | `manager/manager-safety-report.html` | R; lọc theo điều kiện | SV3 – Đỗ Hồng Nhung | Bộ lọc hoạt động; số liệu/tổng hợp khớp dữ liệu đầu vào |
 | SCR-10 | Admin | Quản lý mẫu checklist | Xem, tạo, sửa và lưu trữ mẫu checklist | `admin/admin-checklist-template-management.html` | C/R/U; lưu trữ/vô hiệu hóa | SV3 – Đỗ Hồng Nhung | Tạo/sửa mẫu được; kiểm tra trường bắt buộc; mẫu cập nhật đúng |
 | SCR-11 | Admin | Quản lý khu vực | Quản lý danh sách khu vực công trường | `admin/admin-zone-management.html` | C/R/U; lưu trữ/vô hiệu hóa | SV3 – Đỗ Hồng Nhung | Thêm/sửa khu vực; kiểm tra tên/mã trùng nếu áp dụng; danh sách cập nhật |
-| SCR-12 | Admin | Quản lý tài khoản | Xem, tạo, sửa thông tin và vô hiệu hóa tài khoản mô phỏng | `admin/admin-user-management.html` | C/R/U; tìm kiếm; vô hiệu hóa | SV3 – Đỗ Hồng Nhung | Tìm kiếm được; kiểm tra trường bắt buộc; thay đổi trạng thái hiển thị đúng |
+| SCR-12 | Admin | Quản lý tài khoản | Xem, tạo, sửa thông tin, đặt tên đăng nhập + mật khẩu khởi tạo và vô hiệu hóa tài khoản mô phỏng | `admin/admin-user-management.html` | C/R/U; tìm kiếm; vô hiệu hóa; luật tài khoản | SV3 – Đỗ Hồng Nhung | Tìm kiếm được; kiểm tra trường bắt buộc; thay đổi trạng thái hiển thị đúng |
 
 ## 4. Màn hình dùng chung cần xem xét
 
@@ -40,7 +40,7 @@ Các màn hình dưới đây không tự động được tính vào 12 màn h�
 | ID | Màn hình | Tệp HTML dự kiến | Mục đích | Trạng thái |
 |---|---|---|---|---|
 | COM-01 | Trang chủ/điều hướng | `index.html` | Giới thiệu sản phẩm và điều hướng đến khu vực phù hợp | Cần nhóm xác nhận |
-| COM-02 | Đăng nhập mô phỏng/chọn vai trò | `login.html` | Mô phỏng vào hệ thống theo vai trò | Cần nhóm xác nhận |
+| COM-02 | Đăng nhập theo tài khoản (tên đăng nhập + mật khẩu) | `login.html` | Kiểm tra luật tài khoản, băm mật khẩu mô phỏng, khóa tạm 30 giây sau 5 lần sai, đổi vai trò phải đăng nhập lại | Cần nhóm xác nhận |
 | COM-03 | Hồ sơ cá nhân | `profile.html` | Xem thông tin tài khoản nếu cần | Chưa chốt |
 | COM-04 | Thông báo | `notifications.html` | Hiển thị cập nhật trạng thái nếu cần | Chưa chốt |
 | COM-05 | Không có quyền truy cập | `403.html` | Phản hồi khi vai trò không được phép truy cập | Chưa chốt |
@@ -94,22 +94,28 @@ Có thể bổ sung `Cần bổ sung thông tin` hoặc `Bị từ chối` nếu
 - [ ] Đã có video OBS theo yêu cầu của đề bài.
 - [ ] README và tài liệu liên quan đã được cập nhật.
 
+> Ghi chú 21/10/2026: với cả 12 màn hình, các mục về đường dẫn tệp, HTML/CSS/JavaScript, validation, đọc–ghi dữ liệu, thông báo và trạng thái rỗng đã kiểm chứng khi chạy trên trình duyệt. Các mục còn lại (thiết kế đã duyệt, review chéo, commit/PR, video OBS) chưa có minh chứng nên chưa đánh dấu.
+>
+> Cùng ngày 21/10/2026: tầng đăng nhập theo tài khoản đã được kiểm chứng trên trình duyệt — 10/10 tài khoản seed đăng nhập đúng mật khẩu tương ứng, sai mật khẩu báo số lần còn lại, lần thứ 5 khóa tạm 30 giây có đếm ngược, tài khoản `active: false` bị chặn, hộp thoại đổi mật khẩu (tùy chọn và bắt buộc) chạy đúng, và SCR-12 thêm tài khoản mới kèm tên đăng nhập + mật khẩu rồi đăng nhập được bằng tài khoản đó.
+
 ## 8. Trạng thái theo dõi
+
+Tính đến 21/10/2026: cả 12 màn hình nghiệp vụ và 4 trang phụ trợ (`index.html`, `login.html`, `403.html`, `404.html`) đã có mã chạy được và đã kiểm thử trực tiếp trên trình duyệt (desktop). Video OBS, review chéo và liên kết nhánh/PR chưa có vì kho mã chưa khởi tạo Git.
 
 | ID | Người phụ trách | Trạng thái | Link task | Link PR/commit | Video OBS | Ghi chú |
 |---|---|---|---|---|---|---|
-| SCR-01 | SV1 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-02 | SV1 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-03 | SV1 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-04 | SV2 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-05 | SV2 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-06 | SV2 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-07 | SV3 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-08 | SV3 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-09 | SV3 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-10 | SV3 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-11 | SV3 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
-| SCR-12 | SV3 | Chưa bắt đầu | Chưa cập nhật | Chưa cập nhật | Chưa có | |
+| SCR-01 | SV1 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có (repo chưa phải Git) | Chưa có | Checklist theo mẫu, lưu nháp từng mục, bắt buộc ghi chú khi "Không đạt" |
+| SCR-02 | SV1 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | **Tính năng nổi bật:** Hazard Report Composer + AI-01 gợi ý phân loại, kèm ảnh minh chứng (canvas nén) |
+| SCR-03 | SV1 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | Danh báo cáo của mình, lọc/sắp xếp, timeline xử lý, deep link `?show=` |
+| SCR-04 | SV2 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | **Tính năng nổi bật:** Triage board kéo–thả 5 cột, chặn đóng khi còn hành động mở, ghi lịch sử mọi lần đổi |
+| SCR-05 | SV2 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | Review chi tiết, chạy lại AI-01, giao hành động, deep link `?id=` |
+| SCR-06 | SV2 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | Lập/sửa/hủy đợt kiểm tra, "Phát checklist" sinh run cho tổ, cảnh báo lịch trùng |
+| SCR-07 | SV3 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | **Tính năng nổi bật:** Sơ đồ công trường SVG + lớp nhiệt rủi ro, ma trận 5×5, AI-03 Hotspot có chấp nhận/từ chối |
+| SCR-08 | SV3 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | Theo dõi hành động, slider tiến độ, nghiệm thu bắt buộc ghi chú, tự đề xuất đóng nguy cơ |
+| SCR-09 | SV3 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | Báo cáo theo kỳ 7/30/90/toàn bộ, 4 biểu đồ SVG, in và xuất CSV (có BOM) |
+| SCR-10 | SV3 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | CRUD mẫu checklist, chặn trùng mã, lưu trữ thay vì xóa; AI-02 sinh bản nháp có chọn/bỏ mục |
+| SCR-11 | SV3 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | CRUD khu vực, vẽ vùng `x/y/w/h` cho bản đồ, cảnh báo chồng lấn ô |
+| SCR-12 | SV3 | Hoàn thành code, đã kiểm thử | Chưa tạo | Chưa có | Chưa có | CRUD tài khoản mô phỏng kèm tên đăng nhập + mật khẩu khởi tạo (luật ở `roles-and-features.md` §3.1), validate email/phone, chặn tự tắt chính mình và tắt admin cuối cùng |
 
 ## 9. Việc cần chốt trước khi code
 
