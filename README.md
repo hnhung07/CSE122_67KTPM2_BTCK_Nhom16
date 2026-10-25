@@ -57,7 +57,7 @@
 ## 6. Cấu trúc thư mục
 
 ```text
-SiteSafe_demo/
+CSE_67KTPM2_BTCK_Nhom16/
 ├── index.html                 # Trang giới thiệu dự án + 4 vai trò
 ├── login.html                 # Đăng nhập bằng tên tài khoản + mật khẩu demo
 ├── 403.html / 404.html        # Chặn vai trò / sai đường dẫn
