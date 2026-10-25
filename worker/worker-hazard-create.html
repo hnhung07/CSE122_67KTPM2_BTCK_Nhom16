@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tạo báo cáo nguy cơ – SiteSafe</title>
-  <meta name="description" content="Khai báo nguy cơ tại hiện trường: mô tả, khu vực, mức độ, ảnh minh chứng và đề xuất phân loại theo bộ luật mô phỏng.">
+  <meta name="description"
+    content="Khai báo nguy cơ tại hiện trường: mô tả, khu vực, mức độ, ảnh minh chứng và đề xuất phân loại theo bộ luật mô phỏng.">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
-<body data-root=".." data-role="worker" data-scr="02"
-      data-active="worker/worker-hazard-create.html"
-      data-title="Tạo báo cáo nguy cơ"
-      data-subtitle="Ghi nhận nguy cơ ngay tại hiện trường kèm ảnh minh chứng">
+
+<body data-root=".." data-role="worker" data-scr="02" data-active="worker/worker-hazard-create.html"
+  data-title="Tạo báo cáo nguy cơ" data-subtitle="Ghi nhận nguy cơ ngay tại hiện trường kèm ảnh minh chứng">
 
   <div class="ss-app">
     <aside id="ssSidebar" class="ss-sidebar"></aside>
@@ -21,7 +23,8 @@
       <header id="ssTopbar" class="ss-topbar"></header>
 
       <main class="ss-content">
-        <div class="offcanvas offcanvas-start d-lg-none ss-offcanvas" tabindex="-1" id="ssOffcanvasNav" aria-labelledby="ssOffcanvasTitle">
+        <div class="offcanvas offcanvas-start d-lg-none ss-offcanvas" tabindex="-1" id="ssOffcanvasNav"
+          aria-labelledby="ssOffcanvasTitle">
           <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="ssOffcanvasTitle" style="color:#fff">Menu vai trò</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Đóng"></button>
@@ -50,9 +53,10 @@
                   <div class="mb-3">
                     <label class="form-label" for="hzTitle">Tiêu đề báo cáo <span class="text-danger">*</span></label>
                     <input class="form-control" id="hzTitle" name="title" maxlength="90" required
-                           placeholder="Ví dụ: Sàn thao tác tầng 6 thiếu lan can trục C" aria-describedby="hzTitleHelp">
+                      placeholder="Ví dụ: Sàn thao tác tầng 6 thiếu lan can trục C" aria-describedby="hzTitleHelp">
                     <div class="d-flex justify-content-between">
-                      <div class="form-text" id="hzTitleHelp">Nêu đúng đối tượng và vị trí để người xử lý tìm thấy.</div>
+                      <div class="form-text" id="hzTitleHelp">Nêu đúng đối tượng và vị trí để người xử lý tìm thấy.
+                      </div>
                       <div class="form-text"><span id="titleCount">0</span>/90</div>
                     </div>
                     <div class="invalid-feedback" data-err="title"></div>
@@ -61,7 +65,7 @@
                   <div class="mb-3">
                     <label class="form-label" for="hzDesc">Mô tả chi tiết <span class="text-danger">*</span></label>
                     <textarea class="form-control" id="hzDesc" name="description" rows="5" required minlength="25"
-                              placeholder="Chuyện gì đang xảy ra, ở đâu, ai/bộ phận nào liên quan, đã phát hiện lúc nào?"></textarea>
+                      placeholder="Chuyện gì đang xảy ra, ở đâu, ai/bộ phận nào liên quan, đã phát hiện lúc nào?"></textarea>
                     <div class="d-flex justify-content-between">
                       <div class="form-text">Càng cụ thể, đề xuất phân loại càng sát. Tối thiểu 25 ký tự.</div>
                       <div class="form-text"><span id="descCount">0</span> ký tự</div>
@@ -100,12 +104,14 @@
                   </div>
                   <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" id="hzNotified">
-                    <label class="form-check-label" for="hzNotified">Tôi đã báo tổ trưởng / chỉ huy trực tiếp biết</label>
+                    <label class="form-check-label" for="hzNotified">Tôi đã báo tổ trưởng / chỉ huy trực tiếp
+                      biết</label>
                   </div>
 
-                  <label class="form-label">Ảnh minh chứng <span class="text-muted-soft fw-normal">(tối đa 4 ảnh)</span></label>
+                  <label class="form-label">Ảnh minh chứng <span class="text-muted-soft fw-normal">(tối đa 4
+                      ảnh)</span></label>
                   <div class="ss-drop" id="drop" tabindex="0" role="button"
-                       aria-label="Kéo ảnh vào đây hoặc bấm để chọn ảnh từ thiết bị">
+                    aria-label="Kéo ảnh vào đây hoặc bấm để chọn ảnh từ thiết bị">
                     <i class="bi bi-camera-fill fs-4"></i>
                     <div class="fw-semibold">Kéo ảnh vào đây hoặc bấm để chọn</div>
                     <div class="small text-muted-soft">Ảnh được thu nhỏ và chỉ lưu trong trình duyệt của bạn.</div>
@@ -123,9 +129,13 @@
                 <div class="card-body">
                   <div class="d-flex align-items-center gap-2 mb-2">
                     <span class="ss-avatar" id="repAvatar">—</span>
-                    <div><div class="fw-semibold" id="repName">—</div><div class="ss-row-meta" id="repUnit">—</div></div>
+                    <div>
+                      <div class="fw-semibold" id="repName">—</div>
+                      <div class="ss-row-meta" id="repUnit">—</div>
+                    </div>
                   </div>
-                  <div class="ss-row-meta">Mã báo cáo sẽ được cấp tự động: <span class="ss-row-code" id="nextCode">—</span></div>
+                  <div class="ss-row-meta">Mã báo cáo sẽ được cấp tự động: <span class="ss-row-code"
+                      id="nextCode">—</span></div>
                   <hr>
                   <div id="summaryBox"></div>
                 </div>
@@ -134,21 +144,28 @@
               <div class="ss-ai mb-3" id="aiPanel">
                 <div class="ss-ai-head">
                   <i class="bi bi-magic ss-ai-spark"></i>
-                  <div><strong>Hazard Classifier</strong><div class="ss-ai-note">Đề xuất phân loại khi bạn gõ mô tả</div></div>
+                  <div><strong>Hazard Classifier</strong>
+                    <div class="ss-ai-note">Đề xuất phân loại khi bạn gõ mô tả</div>
+                  </div>
                   <span class="ss-ai-badge ms-auto">Mô phỏng</span>
                 </div>
                 <div class="ss-ai-body" id="aiBody">
-                  <div class="ss-ai-reason">Hãy nhập tiêu đề và mô tả từ khóa (ví dụ: “thiếu lan can”, “cáp điện đi ngang lối đi”) để nhận gợi ý.</div>
+                  <div class="ss-ai-reason">Hãy nhập tiêu đề và mô tả từ khóa (ví dụ: “thiếu lan can”, “cáp điện đi
+                    ngang lối đi”) để nhận gợi ý.</div>
                 </div>
               </div>
 
               <div class="d-grid gap-2">
-                <button class="btn btn-primary btn-lg" type="submit" id="btnSubmit"><i class="bi bi-send-fill me-1"></i>Gửi báo cáo</button>
+                <button class="btn btn-primary btn-lg" type="submit" id="btnSubmit"><i
+                    class="bi bi-send-fill me-1"></i>Gửi báo cáo</button>
                 <div class="d-flex gap-2">
-                  <button class="btn btn-ghost flex-grow-1" type="button" id="btnSaveDraft"><i class="bi bi-save me-1"></i>Lưu bản nháp</button>
-                  <button class="btn btn-ghost" type="button" id="btnDemo" title="Điền một ví dụ minh họa"><i class="bi bi-lightning-charge"></i></button>
+                  <button class="btn btn-ghost flex-grow-1" type="button" id="btnSaveDraft"><i
+                      class="bi bi-save me-1"></i>Lưu bản nháp</button>
+                  <button class="btn btn-ghost" type="button" id="btnDemo" title="Điền một ví dụ minh họa"><i
+                      class="bi bi-lightning-charge"></i></button>
                 </div>
-                <div class="small text-muted-soft text-center">Báo cáo được chuyển ngay sang hàng đợi xem xét của cán bộ an toàn.</div>
+                <div class="small text-muted-soft text-center">Báo cáo được chuyển ngay sang hàng đợi xem xét của cán bộ
+                  an toàn.</div>
               </div>
             </div>
           </div>
@@ -160,7 +177,8 @@
           <div class="d-flex gap-2 align-items-start">
             <i class="bi bi-info-circle mt-1" style="color:var(--ss-teal-700)"></i>
             <div class="small">
-              <strong>Khuyến nghị của nhóm:</strong> SiteSafe là nguyên mẫu học tập. Đề xuất phân loại do bộ luật JavaScript
+              <strong>Khuyến nghị của nhóm:</strong> SiteSafe là nguyên mẫu học tập. Đề xuất phân loại do bộ luật
+              JavaScript
               tạo ra từ dữ liệu mẫu, không phải kết quả của mô hình AI hay API thật, và không thay thế đánh giá an toàn
               của cán bộ có thẩm quyền. Bạn luôn có thể sửa, chấp nhận hoặc bỏ qua đề xuất.
             </div>
@@ -178,4 +196,5 @@
   <script src="../js/modules/ai.js"></script>
   <script src="../js/pages/worker-hazard-create.js"></script>
 </body>
+
 </html>
