@@ -58,7 +58,7 @@
   }
   function levelBadge(level) { return badge('lv', level); }
   function statusBadge(status) { return badge('st', status); }
-  function priBadge(p) { return '<span class="ss-badge" style="background:#eef4ff;color:#2b5da8;border:1px solid #cddffb">Ưu tiên: ' + esc(p) + '</span>'; }
+  function priBadge(p) { return '<span class="ss-badge ss-badge-blue">Ưu tiên: ' + esc(p) + '</span>'; }
 
   function initials(name) {
     var parts = String(name || '').trim().split(/\s+/);
@@ -308,8 +308,10 @@
         '<nav aria-label="Đường dẫn"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="' + rootUrl(NAV[role].home) + '">' + esc(ROLE_LABEL[role]) + '</a></li>' +
         '<li class="breadcrumb-item active" aria-current="page">' + esc(title) + '</li></ol></nav>' +
         (subtitle ? '<div class="small text-muted-soft d-none d-md-block">' + esc(subtitle) + '</div>' : '') + '</div>' +
-        '<span class="ss-badge d-none d-lg-inline-flex" style="background:var(--ss-teal-50);color:var(--ss-teal-800);border:1px solid var(--ss-teal-100)">' +
+        '<span class="ss-badge ss-badge-soft d-none d-lg-inline-flex">' +
         '<i class="bi bi-diagram-3"></i>' + esc(store.read().project.name) + '</span>' +
+        '<button class="btn btn-ghost ss-theme-btn" type="button" data-ss-theme><i class="bi bi-circle-half"></i>' +
+        '<span class="ss-theme-label d-none d-md-inline ms-1">Tự động</span></button>' +
         '<div class="dropdown"><button class="btn btn-ghost position-relative" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Thông báo">' +
         '<i class="bi bi-bell"></i>' + (pending ? '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">' + pending + '</span>' : '') +
         '</button><div class="dropdown-menu dropdown-menu-end" style="width:min(340px,92vw)">' +
@@ -329,6 +331,8 @@
         '<button class="dropdown-item" data-ss-changepwd><i class="bi bi-key me-2"></i>Đổi mật khẩu</button>' +
         '<a class="dropdown-item" href="' + rootUrl('login.html') + '?switch=1"><i class="bi bi-arrow-repeat me-2"></i>Đăng nhập vai trò khác</a>' +
         '<hr class="dropdown-divider"><button class="dropdown-item text-danger" data-ss-logout><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</button></div></div>';
+
+      if (global.SiteSafeTheme) global.SiteSafeTheme.refresh();
 
       top.addEventListener('click', function (e) {
         if (e.target.closest('[data-ss-changepwd]')) openPasswordModal(false);
