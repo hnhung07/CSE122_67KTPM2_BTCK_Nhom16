@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quản lý tài khoản - SiteSafe</title>
+  <meta name="description" content="Xem, tạo, sửa và vô hiệu hóa tài khoản mô phỏng theo vai trò trong SiteSafe.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-root=".." data-role="admin" data-scr="12"
+      data-active="admin/admin-user-management.html"
+      data-title="Quản lý tài khoản"
+      data-subtitle="Phân vai trò, cập nhật thông tin và vô hiệu hóa tài khoản mô phỏng">
+
+  <div class="ss-app">
+    <aside id="ssSidebar" class="ss-sidebar"></aside>
+    <div class="ss-main">
+      <header id="ssTopbar" class="ss-topbar"></header>
+      <main class="ss-content">
+        <div class="offcanvas offcanvas-start d-lg-none ss-offcanvas" tabindex="-1" id="ssOffcanvasNav" aria-labelledby="ssOffcanvasTitle">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="ssOffcanvasTitle" style="color:#fff">Menu vai trò</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Đóng"></button>
+          </div>
+          <div class="offcanvas-body" id="ssOffcanvasBody"></div>
+        </div>
+
+        <div class="row g-3 mb-3" id="kpis"></div>
+
+        <div class="card mb-3">
+          <div class="card-body py-3">
+            <div class="row g-2 align-items-end">
+              <div class="col-md-4">
+                <label class="form-label small mb-1" for="q">Tìm kiếm</label>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text"><i class="bi bi-search"></i></span>
+                  <input class="form-control" id="q" placeholder="Theo tên, email, đơn vị…">
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <label class="form-label small mb-1" for="fRole">Vai trò</label>
+                <select class="form-select form-select-sm" id="fRole"></select>
+              </div>
+              <div class="col-6 col-md-3">
+                <label class="form-label small mb-1" for="fState">Trạng thái tài khoản</label>
+                <select class="form-select form-select-sm" id="fState">
+                  <option value="">Tất cả</option>
+                  <option value="active">Đang hoạt động</option>
+                  <option value="inactive">Đã vô hiệu hóa</option>
+                </select>
+              </div>
+              <div class="col-12 col-md-2 d-flex align-items-end justify-content-between gap-2">
+                <button class="btn btn-ghost btn-sm" id="clearFilter" type="button"><i class="bi bi-x-lg me-1"></i>Xóa lọc</button>
+                <span class="ss-row-meta" id="rowCount">—</span>
+              </div>
+            </div>
+            <div class="d-flex flex-wrap gap-2 mt-3" id="roleStats"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
+            <span><i class="bi bi-people me-1"></i>Danh sách tài khoản</span>
+            <button class="btn btn-primary btn-sm" id="newBtn" type="button"><i class="bi bi-person-plus me-1"></i>Thêm tài khoản</button>
+          </div>
+          <div class="card-body p-0" id="listHost"></div>
+          <div class="card-footer small text-muted-soft d-flex flex-wrap gap-2 justify-content-between">
+            <span><i class="bi bi-shield-lock me-1"></i>Không thể vô hiệu hóa chính mình; hệ thống luôn phải còn ít nhất một Quản trị viên hoạt động.</span>
+            <span>Nguyên mẫu học tập: thông tin tài khoản là dữ liệu dựng sẵn.</span>
+          </div>
+        </div>
+
+        <div id="ssOwnerNote" class="mt-4"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- modal thêm / sửa tài khoản -->
+  <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <form class="modal-content" id="userForm" novalidate>
+        <input type="hidden" id="fId">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formTitle">Thêm tài khoản</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label" for="fName">Họ tên <span class="text-danger">*</span></label>
+              <input class="form-control" id="fName" maxlength="60" placeholder="Ví dụ: Trần Minh Khuê">
+              <div class="invalid-feedback" id="fNameErr">Họ tên phải từ 3 ký tự trở lên.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="fEmail">Email <span class="text-danger">*</span></label>
+              <input class="form-control" id="fEmail" maxlength="70" placeholder="ten@sitesafe.vn" autocomplete="off">
+              <div class="invalid-feedback" id="fEmailErr">Email không đúng định dạng.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="fUsername">Tên đăng nhập <span class="text-danger">*</span></label>
+              <input class="form-control" id="fUsername" maxlength="20" placeholder="ví dụ: khuetran" autocomplete="off" spellcheck="false">
+              <div class="invalid-feedback" id="fUsernameErr">6–20 ký tự, chữ thường không dấu.</div>
+              <div class="small text-muted-soft mt-1">Chỉ a–z, 0–9 và . _ - · không trùng tài khoản khác.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="fPassword">Mật khẩu khởi tạo <span class="text-danger" id="fPwdReq">*</span></label>
+              <input class="form-control" id="fPassword" type="password" maxlength="24" autocomplete="new-password" placeholder="8–24 ký tự, đủ 4 nhóm">
+              <div class="invalid-feedback" id="fPasswordErr">Mật khẩu cần đủ 4 nhóm: hoa, thường, số, ký tự đặc biệt.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="fRoleInput">Vai trò <span class="text-danger">*</span></label>
+              <select class="form-select" id="fRoleInput"></select>
+              <div class="small text-muted-soft mt-1" id="roleDesc">—</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="fUnit">Đơn vị / tổ <span class="text-danger">*</span></label>
+              <input class="form-control" id="fUnit" maxlength="70" list="unitList" placeholder="Ví dụ: Tổ 3 – Hầm/móng">
+              <datalist id="unitList"></datalist>
+              <div class="invalid-feedback" id="fUnitErr">Đơn vị là bắt buộc để phục vụ báo cáo theo tổ.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="fPhone">Số điện thoại <span class="text-danger">*</span></label>
+              <input class="form-control" id="fPhone" maxlength="14" placeholder="0912345678" inputmode="numeric">
+              <div class="invalid-feedback" id="fPhoneErr">Số điện thoại chỉ gồm chữ số, độ dài 9–11 ký tự.</div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-check form-switch mt-md-4 pt-md-3">
+                <input class="form-check-input" type="checkbox" id="fActive" checked>
+                <label class="form-check-label small" for="fActive">Tài khoản đang hoạt động</label>
+              </div>
+              <div class="small text-muted-soft ps-4" id="activeHint"></div>
+            </div>
+            <div class="col-12">
+              <div class="alert small mb-0" id="roleNote" hidden
+                   style="background:var(--ss-teal-50);border:1px solid var(--ss-teal-100);color:var(--ss-teal-800)"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-wrap">
+          <span class="small text-muted-soft me-auto" id="formHint"></span>
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Hủy bỏ</button>
+          <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Lưu tài khoản</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/modules/seed-data.js"></script>
+  <script src="../js/modules/store.js"></script>
+  <script src="../js/modules/app.js"></script>
+  <script src="../js/pages/admin-user-management.js"></script>
+</body>
+</html>

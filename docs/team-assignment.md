@@ -1,4 +1,3 @@
-//Ghi tên thành viên, chức năng được giao, deadline, nhánh Git, commit/PR và minh chứng OBS.
 ## 1. Nguyên tắc phân công
 
 Theo đề bài, nhóm có 3 sinh viên. Mỗi người phụ trách chính một phần nghiệp vụ nhưng vẫn phải tự thực hiện HTML, CSS, JavaScript, dữ liệu, responsive, Git/GitHub và OBS cho ít nhất một luồng hoàn chỉnh. Không chia theo kiểu một người chỉ thiết kế, một người chỉ HTML và một người chỉ JavaScript.
@@ -15,7 +14,7 @@ Theo đề bài, nhóm có 3 sinh viên. Mỗi người phụ trách chính mộ
 
 ## 3. Tính năng nghiệp vụ mỗi thành viên
 
-Bảng dưới đây là gợi ý phân chia các tính năng để nhóm xác nhận. Tên màn hình và phạm vi phải khớp `screen-list.md`.
+Bảng dưới đây là gợi ý phân chia các tính năng để nhóm xác nhận. Tên màn hình và phạm vi phải khớp `screen-inventory.md`.
 
 | Thành viên | Tối thiểu 3 tính năng nghiệp vụ gợi ý |
 |---|---|
@@ -28,7 +27,7 @@ Nếu giảng viên yêu cầu mỗi sinh viên đúng 3 tính năng, hãy chố
 ## 4. Quy trình phối hợp
 
 1. Cả nhóm đọc đề và thống nhất `project-proposal.md`, `roles-and-features.md`.
-2. Chốt `screen-list.md`, sơ đồ trang, luồng người dùng và bản thiết kế; xin giảng viên duyệt.
+2. Chốt `screen-inventory.md`, sơ đồ trang, luồng người dùng và bản thiết kế; xin giảng viên duyệt.
 3. Tạo task trên Trello/Jira/Notion. Mỗi task ghi mã, màn hình/tệp, người phụ trách, hạn, nhánh và trạng thái.
 4. Tạo nhánh riêng từ `dev`, ví dụ `feature/worker-hazard-create`.
 5. Code, chạy thử và commit với thông điệp mô tả rõ thay đổi.
@@ -49,7 +48,7 @@ feature/worker-hazard-create
 feature/safety-dashboard
 feature/manager-zone-risk-map
 fix/form-validation
-docs/update-screen-list
+docs/update-screen-inventory
 ```
 
 ### Commit mẫu
@@ -70,14 +69,21 @@ Cập nhật bảng này trong quá trình làm; không điền trạng thái ho
 
 | Mã task | Đầu việc | Người phụ trách | Nhánh/PR | Hạn | Trạng thái | OBS |
 |---|---|---|---|---|---|---|
-| TASK-01 | Chốt bảng kiểm kê màn hình và luồng người dùng | Cả nhóm | Chưa tạo | Chưa chốt | Cần làm | Chưa có |
-| TASK-02 | Hoàn thiện luồng checklist và báo hazard | SV1 | Chưa tạo | Chưa chốt | Cần làm | Chưa có |
-| TASK-03 | Hoàn thiện luồng review hazard/inspection | SV2 | Chưa tạo | Chưa chốt | Cần làm | Chưa có |
-| TASK-04 | Hoàn thiện luồng manager/admin | SV3 | Chưa tạo | Chưa chốt | Cần làm | Chưa có |
-| TASK-05 | Tích hợp dữ liệu JSON/LocalStorage | Cả nhóm; điều phối theo thống nhất | Chưa tạo | Chưa chốt | Cần làm | Chưa có |
-| TASK-06 | Hoàn thiện 3 trải nghiệm AI mô phỏng | Phân công tại buổi họp nhóm | Chưa tạo | Chưa chốt | Cần làm | Chưa có |
-| TASK-07 | Kiểm thử responsive và luồng liên vai trò | Review chéo | Chưa tạo | Chưa chốt | Cần làm | Chưa có |
-| TASK-08 | OBS, cập nhật README và tài liệu cuối | Từng người + người tích hợp | Chưa tạo | Chưa chốt | Cần làm | Chưa có |
+| TASK-01 | Chốt bảng kiểm kê màn hình và luồng người dùng | Cả nhóm | Chưa tạo | 21/10/2026 | Hoàn thành | Chưa có |
+| TASK-02 | Hoàn thiện luồng checklist và báo hazard (SCR-01→03) | SV1 | Chưa tạo (repo chưa khởi tạo Git) | 21/10/2026 | Hoàn thành code, đã tự kiểm thử | Chưa có |
+| TASK-03 | Hoàn thiện luồng review hazard/inspection (SCR-04→06) | SV2 | Chưa tạo | 21/10/2026 | Hoàn thành code, đã tự kiểm thử | Chưa có |
+| TASK-04 | Hoàn thiện luồng manager/admin (SCR-07→12) | SV3 | Chưa tạo | 21/10/2026 | Hoàn thành code, đã tự kiểm thử | Chưa có |
+| TASK-05 | Tích hợp dữ liệu JSON/LocalStorage | Cả nhóm; SV3 điều phối | Chưa tạo | 21/10/2026 | Hoàn thành (seed + `store.js`, khóa `sitesafe.db.v3`) | Chưa có |
+| TASK-06 | Hoàn thiện 3 trải nghiệm AI mô phỏng | AI-01 SV1 · AI-02 SV3 · AI-03 SV3 | Chưa tạo | 21/10/2026 | Hoàn thành, luôn gắn nhãn "Mô phỏng" + nút sửa/chấp nhận/từ chối | Chưa có |
+| TASK-07 | Kiểm thử responsive và luồng liên vai trò | Review chéo | Chưa tạo | 21/10/2026 | Đã kiểm thử luồng liên vai trò trên desktop; chưa kiểm thử thủ công tablet/mobile | Chưa có |
+| TASK-08 | OBS, cập nhật README và tài liệu cuối | Từng người + người tích hợp | Chưa tạo | Chưa chốt | Đang làm (README + các bảng tài liệu đã cập nhật; video chưa ghi) | Chưa có |
+| TASK-09 | Tầng đăng nhập theo tài khoản: tên đăng nhập + mật khẩu, luật đặt, khóa tạm, buộc đổi mật khẩu | SV3 (code `store.js`/`login.html`/SCR-12), cả nhóm dùng | Chưa tạo | 21/10/2026 | Hoàn thành, đã kiểm chứng 10/10 tài khoản seed + luồng khóa/đổi mật khẩu; luật ghi ở `roles-and-features.md` §3.1 và README §7 | Chưa có |
+
+Ba luồng liên vai trò đã chạy thông trên trình duyệt ngày 21/10/2026:
+
+1. `worker` báo nguy cơ kèm ảnh (SCR-02) → `safety` kéo thẻ xác nhận (SCR-04) → review và giao hành động (SCR-05) → `manager` tăng tiến độ, nghiệm thu có ghi chú (SCR-08) → hệ thống đề xuất đóng nguy cơ và gửi thông báo cho `worker`.
+2. `safety` lập đợt kiểm tra (SCR-06) → "Phát checklist" sinh bản ghi run → `worker` điền kết quả, mục "Không đạt" bắt buộc ghi chú và có thể báo thẳng thành nguy cơ.
+3. `admin` thêm khu vực (SCR-11) → khu vực mới xuất hiện ngay trên bản đồ rủi ro (SCR-07), trong bộ lọc của bảng hành động và báo cáo.
 
 ## 7. Quy tắc review chéo
 

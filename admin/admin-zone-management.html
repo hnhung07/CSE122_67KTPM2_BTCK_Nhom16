@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quản lý khu vực công trường - SiteSafe</title>
+  <meta name="description" content="Khai báo, sửa và vô hiệu hóa khu vực công trường; vùng hiển thị trên bản đồ rủi ro do quản lý công trường sử dụng.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-root=".." data-role="admin" data-scr="11"
+      data-active="admin/admin-zone-management.html"
+      data-title="Quản lý khu vực công trường"
+      data-subtitle="Khai báo khu vực, tổ phụ trách và vùng hiển thị trên bản đồ rủi ro">
+
+  <div class="ss-app">
+    <aside id="ssSidebar" class="ss-sidebar"></aside>
+    <div class="ss-main">
+      <header id="ssTopbar" class="ss-topbar"></header>
+      <main class="ss-content">
+        <div class="offcanvas offcanvas-start d-lg-none ss-offcanvas" tabindex="-1" id="ssOffcanvasNav" aria-labelledby="ssOffcanvasTitle">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="ssOffcanvasTitle" style="color:#fff">Menu vai trò</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Đóng"></button>
+          </div>
+          <div class="offcanvas-body" id="ssOffcanvasBody"></div>
+        </div>
+
+        <div class="row g-3 mb-3" id="kpis"></div>
+
+        <div class="alert d-flex flex-wrap gap-2 align-items-center justify-content-between"
+             style="background:var(--ss-teal-50);border:1px solid var(--ss-teal-100);color:var(--ss-teal-800)">
+          <span class="small"><i class="bi bi-info-circle me-1"></i>
+            Khu vực là dữ liệu cấu hình dùng chung: <strong>bản đồ rủi ro</strong> (SCR-07) và <strong>đợt kiểm tra</strong> (SCR-06)
+            đọc theo <code>zoneId</code>. Ngừng hoạt động chỉ ẩn khu vực khỏi danh sách chọn, không xóa lịch sử nguy cơ.</span>
+          <button class="btn btn-ghost btn-sm" id="scrollMap" type="button"><i class="bi bi-map me-1"></i>Xem sơ đồ vùng</button>
+        </div>
+
+        <div class="card mb-3 mt-3">
+          <div class="card-body py-3">
+            <div class="row g-2 align-items-end">
+              <div class="col-md-4">
+                <label class="form-label small mb-1" for="q">Tìm kiếm</label>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text"><i class="bi bi-search"></i></span>
+                  <input class="form-control" id="q" placeholder="Theo mã, tên khu vực, tổ phụ trách…">
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <label class="form-label small mb-1" for="fType">Loại khu vực</label>
+                <select class="form-select form-select-sm" id="fType"></select>
+              </div>
+              <div class="col-6 col-md-3">
+                <label class="form-label small mb-1" for="fState">Trạng thái</label>
+                <select class="form-select form-select-sm" id="fState">
+                  <option value="">Tất cả khu vực</option>
+                  <option value="active">Đang hoạt động</option>
+                  <option value="inactive">Đã ngừng hoạt động</option>
+                </select>
+              </div>
+              <div class="col-12 col-md-2 d-flex align-items-end justify-content-between gap-2">
+                <button class="btn btn-ghost btn-sm" id="clearFilter" type="button"><i class="bi bi-x-lg me-1"></i>Xóa lọc</button>
+                <span class="ss-row-meta" id="rowCount">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
+            <span><i class="bi bi-map me-1"></i>Danh sách khu vực công trường</span>
+            <button class="btn btn-primary btn-sm" id="newBtn" type="button"><i class="bi bi-plus-lg me-1"></i>Thêm khu vực</button>
+          </div>
+          <div class="card-body p-0" id="listHost"></div>
+          <div class="card-footer small text-muted-soft d-flex flex-wrap gap-2 justify-content-between">
+            <span><i class="bi bi-geo-alt me-1"></i>Mã khu vực viết hoa dạng KQ-XXX và không được trùng.</span>
+            <span>Khu vực còn nguy cơ đang mở thì không nên ngừng hoạt động.</span>
+          </div>
+        </div>
+
+        <div class="card mt-3" id="mapCard">
+          <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
+            <span><i class="bi bi-bounding-box me-1"></i>Sơ đồ vùng trên bản đồ rủi ro</span>
+            <span class="ss-row-meta">Kích thước khung 1000 × 620 (đơn vị đồ họa, giống SCR-07)</span>
+          </div>
+          <div class="card-body">
+            <div class="ss-map-wrap" id="mapHost"></div>
+            <div class="ss-map-legend mt-2" id="mapLegend"></div>
+          </div>
+        </div>
+
+        <div id="ssOwnerNote" class="mt-4"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- modal thêm / sửa khu vực -->
+  <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+      <form class="modal-content" id="zoneForm" novalidate>
+        <input type="hidden" id="fId">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formTitle">Thêm khu vực</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label" for="fCode">Mã khu vực <span class="text-danger">*</span></label>
+              <input class="form-control text-uppercase" id="fCode" maxlength="10" placeholder="KQ-MO1" style="font-family:ui-monospace,monospace">
+              <div class="invalid-feedback" id="fCodeErr">Mã phải viết hoa, dạng KQ-ABC (2–6 ký tự sau gạch nối).</div>
+            </div>
+            <div class="col-md-8">
+              <label class="form-label" for="fName">Tên khu vực <span class="text-danger">*</span></label>
+              <input class="form-control" id="fName" maxlength="90" placeholder="Ví dụ: Khu vực thi công tầng hầm B1">
+              <div class="invalid-feedback">Tên khu vực phải từ 4 ký tự trở lên.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="fTypeInput">Loại khu vực <span class="text-danger">*</span></label>
+              <select class="form-select" id="fTypeInput"></select>
+              <div class="invalid-feedback">Chọn loại khu vực để đồng bộ với bộ lọc báo cáo.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="fHead">Tổ phụ trách <span class="text-danger">*</span></label>
+              <select class="form-select" id="fHead"></select>
+              <div class="invalid-feedback">Chọn tổ/đầu mối phụ trách khu vực.</div>
+            </div>
+
+            <div class="col-12">
+              <div class="ss-section-title mb-2 mb-md-3">Vùng hiển thị trên bản đồ rủi ro</div>
+              <div class="row g-2">
+                <div class="col-6 col-md-3">
+                  <label class="form-label small" for="fMapX">Trái (x)</label>
+                  <input class="form-control form-control-sm" type="number" id="fMapX" min="0" max="960" step="10">
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label small" for="fMapY">Trên (y)</label>
+                  <input class="form-control form-control-sm" type="number" id="fMapY" min="0" max="580" step="10">
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label small" for="fMapW">Rộng (w)</label>
+                  <input class="form-control form-control-sm" type="number" id="fMapW" min="40" max="1000" step="10">
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label small" for="fMapH">Cao (h)</label>
+                  <input class="form-control form-control-sm" type="number" id="fMapH" min="40" max="620" step="10">
+                </div>
+              </div>
+              <div class="alert small mb-0 mt-2" id="mapErr" hidden style="background:#fde7ea;border:1px solid #f5bfc6;color:#a82d3b"></div>
+              <div class="mt-2 p-2 rounded-3" style="background:#f3faf9;border:1px solid var(--ss-line)">
+                <div id="previewHost"></div>
+              </div>
+              <div class="small text-muted-soft mt-2">
+                <i class="bi bi-diagram-3 me-1"></i>Các ô này vẽ hình chữ nhật trên SCR-07; ô quá nhỏ (&lt; 40) sẽ không đọc được nhãn khu vực.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="fActive" checked>
+                <label class="form-check-label small" for="fActive">Khu vực đang hoạt động (được chọn khi tạo báo cáo/đợt kiểm tra)</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-wrap">
+          <span class="small text-muted-soft me-auto" id="formHint"></span>
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Hủy bỏ</button>
+          <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Lưu khu vực</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/modules/seed-data.js"></script>
+  <script src="../js/modules/store.js"></script>
+  <script src="../js/modules/app.js"></script>
+  <script src="../js/pages/admin-zone-management.js"></script>
+</body>
+</html>

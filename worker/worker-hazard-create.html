@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tạo báo cáo nguy cơ – SiteSafe</title>
+  <meta name="description" content="Khai báo nguy cơ tại hiện trường: mô tả, khu vực, mức độ, ảnh minh chứng và đề xuất phân loại theo bộ luật mô phỏng.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-root=".." data-role="worker" data-scr="02"
+      data-active="worker/worker-hazard-create.html"
+      data-title="Tạo báo cáo nguy cơ"
+      data-subtitle="Ghi nhận nguy cơ ngay tại hiện trường kèm ảnh minh chứng">
+
+  <div class="ss-app">
+    <aside id="ssSidebar" class="ss-sidebar"></aside>
+    <div class="ss-main">
+      <header id="ssTopbar" class="ss-topbar"></header>
+
+      <main class="ss-content">
+        <div class="offcanvas offcanvas-start d-lg-none ss-offcanvas" tabindex="-1" id="ssOffcanvasNav" aria-labelledby="ssOffcanvasTitle">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="ssOffcanvasTitle" style="color:#fff">Menu vai trò</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Đóng"></button>
+          </div>
+          <div class="offcanvas-body" id="ssOffcanvasBody"></div>
+        </div>
+
+        <div id="prefillBar"></div>
+        <div id="draftBar"></div>
+
+        <form id="hazardForm" novalidate autocomplete="off">
+          <div class="row g-3 g-xl-4">
+            <div class="col-lg-7 col-xxl-6">
+              <div class="card mb-3">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <span><i class="bi bi-1-circle me-1"></i>Mô tả hiện trường</span>
+                  <span class="ss-row-meta">Trường có dấu * là bắt buộc</span>
+                </div>
+                <div class="card-body">
+                  <div class="ss-steps mb-3">
+                    <div class="ss-step is-current" data-step="1"><i class="bi bi-pencil-square me-1"></i>Mô tả</div>
+                    <div class="ss-step" data-step="2"><i class="bi bi-magic me-1"></i>Phân loại</div>
+                    <div class="ss-step" data-step="3"><i class="bi bi-send me-1"></i>Gửi báo cáo</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="hzTitle">Tiêu đề báo cáo <span class="text-danger">*</span></label>
+                    <input class="form-control" id="hzTitle" name="title" maxlength="90" required
+                           placeholder="Ví dụ: Sàn thao tác tầng 6 thiếu lan can trục C" aria-describedby="hzTitleHelp">
+                    <div class="d-flex justify-content-between">
+                      <div class="form-text" id="hzTitleHelp">Nêu đúng đối tượng và vị trí để người xử lý tìm thấy.</div>
+                      <div class="form-text"><span id="titleCount">0</span>/90</div>
+                    </div>
+                    <div class="invalid-feedback" data-err="title"></div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="hzDesc">Mô tả chi tiết <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="hzDesc" name="description" rows="5" required minlength="25"
+                              placeholder="Chuyện gì đang xảy ra, ở đâu, ai/bộ phận nào liên quan, đã phát hiện lúc nào?"></textarea>
+                    <div class="d-flex justify-content-between">
+                      <div class="form-text">Càng cụ thể, đề xuất phân loại càng sát. Tối thiểu 25 ký tự.</div>
+                      <div class="form-text"><span id="descCount">0</span> ký tự</div>
+                    </div>
+                    <div class="invalid-feedback" data-err="description"></div>
+                  </div>
+
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label" for="hzZone">Khu vực <span class="text-danger">*</span></label>
+                      <select class="form-select" id="hzZone" name="zoneId" required></select>
+                      <div class="form-text" id="zoneHint">Chọn khu vực để xem mức rủi ro hiện tại.</div>
+                      <div class="invalid-feedback" data-err="zoneId"></div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="hzWork">Loại công việc</label>
+                      <select class="form-select" id="hzWork" name="workType"></select>
+                      <div class="form-text">Dùng để chọn đúng mẫu checklist liên quan.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card mb-3">
+                <div class="card-header"><i class="bi bi-2-circle me-1"></i>Đánh giá của bạn &amp; minh chứng</div>
+                <div class="card-body">
+                  <fieldset class="mb-3">
+                    <legend class="form-label mb-2">Mức độ bạn nhận định <span class="text-danger">*</span></legend>
+                    <div class="d-flex flex-wrap gap-2" id="levelPills"></div>
+                    <div class="text-danger small d-none" data-err="level">Hãy chọn một mức độ.</div>
+                  </fieldset>
+
+                  <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" id="hzStop" role="switch">
+                    <label class="form-check-label" for="hzStop">Đề xuất dừng việc tại khu vực này ngay</label>
+                  </div>
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="hzNotified">
+                    <label class="form-check-label" for="hzNotified">Tôi đã báo tổ trưởng / chỉ huy trực tiếp biết</label>
+                  </div>
+
+                  <label class="form-label">Ảnh minh chứng <span class="text-muted-soft fw-normal">(tối đa 4 ảnh)</span></label>
+                  <div class="ss-drop" id="drop" tabindex="0" role="button"
+                       aria-label="Kéo ảnh vào đây hoặc bấm để chọn ảnh từ thiết bị">
+                    <i class="bi bi-camera-fill fs-4"></i>
+                    <div class="fw-semibold">Kéo ảnh vào đây hoặc bấm để chọn</div>
+                    <div class="small text-muted-soft">Ảnh được thu nhỏ và chỉ lưu trong trình duyệt của bạn.</div>
+                    <input type="file" id="fileInput" accept="image/*" capture="environment" class="d-none" multiple>
+                  </div>
+                  <div class="row g-2 mt-1" id="thumbs"></div>
+                  <div class="small text-danger d-none" id="evidenceError"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-5 col-xxl-4">
+              <div class="card mb-3">
+                <div class="card-header"><i class="bi bi-3-circle me-1"></i>Thông tin người báo</div>
+                <div class="card-body">
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="ss-avatar" id="repAvatar">—</span>
+                    <div><div class="fw-semibold" id="repName">—</div><div class="ss-row-meta" id="repUnit">—</div></div>
+                  </div>
+                  <div class="ss-row-meta">Mã báo cáo sẽ được cấp tự động: <span class="ss-row-code" id="nextCode">—</span></div>
+                  <hr>
+                  <div id="summaryBox"></div>
+                </div>
+              </div>
+
+              <div class="ss-ai mb-3" id="aiPanel">
+                <div class="ss-ai-head">
+                  <i class="bi bi-magic ss-ai-spark"></i>
+                  <div><strong>Hazard Classifier</strong><div class="ss-ai-note">Đề xuất phân loại khi bạn gõ mô tả</div></div>
+                  <span class="ss-ai-badge ms-auto">Mô phỏng</span>
+                </div>
+                <div class="ss-ai-body" id="aiBody">
+                  <div class="ss-ai-reason">Hãy nhập tiêu đề và mô tả từ khóa (ví dụ: “thiếu lan can”, “cáp điện đi ngang lối đi”) để nhận gợi ý.</div>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary btn-lg" type="submit" id="btnSubmit"><i class="bi bi-send-fill me-1"></i>Gửi báo cáo</button>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-ghost flex-grow-1" type="button" id="btnSaveDraft"><i class="bi bi-save me-1"></i>Lưu bản nháp</button>
+                  <button class="btn btn-ghost" type="button" id="btnDemo" title="Điền một ví dụ minh họa"><i class="bi bi-lightning-charge"></i></button>
+                </div>
+                <div class="small text-muted-soft text-center">Báo cáo được chuyển ngay sang hàng đợi xem xét của cán bộ an toàn.</div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div id="resultBox" class="mt-4"></div>
+
+        <div class="alert mt-4" style="background:var(--ss-teal-50);border:1px solid var(--ss-teal-100)">
+          <div class="d-flex gap-2 align-items-start">
+            <i class="bi bi-info-circle mt-1" style="color:var(--ss-teal-700)"></i>
+            <div class="small">
+              <strong>Khuyến nghị của nhóm:</strong> SiteSafe là nguyên mẫu học tập. Đề xuất phân loại do bộ luật JavaScript
+              tạo ra từ dữ liệu mẫu, không phải kết quả của mô hình AI hay API thật, và không thay thế đánh giá an toàn
+              của cán bộ có thẩm quyền. Bạn luôn có thể sửa, chấp nhận hoặc bỏ qua đề xuất.
+            </div>
+          </div>
+        </div>
+        <div id="ssOwnerNote" class="mt-3"></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/modules/seed-data.js"></script>
+  <script src="../js/modules/store.js"></script>
+  <script src="../js/modules/app.js"></script>
+  <script src="../js/modules/ai.js"></script>
+  <script src="../js/pages/worker-hazard-create.js"></script>
+</body>
+</html>

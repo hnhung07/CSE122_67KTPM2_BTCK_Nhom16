@@ -3,7 +3,7 @@
 - **Tên dự án:** SiteSafe – Theo dõi an toàn công trường
 - **Học phần:** Phát triển ứng dụng Web cơ bản – CSE122
 - **Loại sản phẩm:** Nguyên mẫu website Frontend
-- **Nhóm thực hiện:** 3 sinh viên
+- **Nhóm thực hiện:** NHÓM 16
 - **Lĩnh vực:** Xây dựng / ConstructionTech
 
 ## 2. Bối cảnh

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 - Không tìm thấy trang | SiteSafe</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="ss-landing">
+  <header class="ss-landing-bar">
+    <a class="ss-brand" href="index.html">
+      <span class="ss-brand-mark"><i class="bi bi-hexagon-fill"></i></span>
+      <span class="fw-bold">SiteSafe</span>
+    </a>
+    <nav class="ss-landing-nav" aria-label="Điều hướng nhanh">
+      <a href="index.html">Trang giới thiệu</a>
+      <a href="login.html">Đăng nhập</a>
+    </nav>
+  </header>
+  <main class="container py-4 py-lg-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div class="card">
+          <div class="card-body p-4 p-lg-5 text-center">
+            <div class="ss-kpi-icon ss-kpi-icon-lg mx-auto mb-3"><i class="bi bi-compass"></i></div>
+            <p class="ss-row-code">LỖI 404</p>
+            <h1 class="h3 mb-2">Đường dẫn không tồn tại trong nguyên mẫu</h1>
+            <p class="text-muted-soft">Có thể tên file đã thay đổi, hoặc bạn mở màn hình của vai trò khác. Hãy xuất phát từ trang giới thiệu hoặc đăng nhập lại đúng vai trò.</p>
+            <div class="d-flex flex-wrap gap-2 justify-content-center mt-3">
+              <a class="btn btn-primary" href="index.html"><i class="bi bi-house-door me-1"></i>Trang giới thiệu</a>
+              <a class="btn btn-ghost" href="login.html"><i class="bi bi-person-badge me-1"></i>Đăng nhập</a>
+            </div>
+            <hr class="my-4">
+            <div class="text-start">
+              <p class="ss-section-title">12 màn hình nghiệp vụ</p>
+              <div class="row g-2 small" id="screenLinks"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="ss-landing-bar ss-landing-foot">
+    <span>SiteSafe · nguyên mẫu học tập CSE122 · nhóm 3 sinh viên, Đại học Thủy lợi</span>
+    <span class="ss-row-code">Lỗi 404 · không tìm thấy trang</span>
+  </footer>
+  <script>
+    (function () {
+      var files = [
+        ['worker/worker-safety-checklist.html', 'SCR-01 Checklist an toàn'],
+        ['worker/worker-hazard-create.html', 'SCR-02 Tạo báo cáo nguy cơ'],
+        ['worker/worker-my-hazards.html', 'SCR-03 Nguy cơ của tôi'],
+        ['safety/safety-dashboard.html', 'SCR-04 Dashboard an toàn'],
+        ['safety/safety-hazard-detail.html', 'SCR-05 Chi tiết & xem xét'],
+        ['safety/safety-inspection-management.html', 'SCR-06 Quản lý đợt kiểm tra'],
+        ['manager/manager-zone-risk-map.html', 'SCR-07 Bản đồ rủi ro'],
+        ['manager/manager-corrective-actions.html', 'SCR-08 Hành động khắc phục'],
+        ['manager/manager-safety-report.html', 'SCR-09 Báo cáo an toàn'],
+        ['admin/admin-checklist-template-management.html', 'SCR-10 Mẫu checklist'],
+        ['admin/admin-zone-management.html', 'SCR-11 Quản lý khu vực'],
+        ['admin/admin-user-management.html', 'SCR-12 Quản lý tài khoản']
+      ];
+      document.getElementById('screenLinks').innerHTML = files.map(function (f) {
+        return '<div class="col-md-6"><a class="d-block text-truncate" href="' + f[0] + '"><i class="bi bi-arrow-right-short"></i>' + f[1] + '</a></div>';
+      }).join('');
+    })();
+  </script>
+</body>
+</html>
