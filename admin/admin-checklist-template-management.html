@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quản lý mẫu checklist - SiteSafe</title>
-  <meta name="description" content="Tạo, sửa, lưu trữ mẫu checklist an toàn và dùng Checklist Generator (mô phỏng) để soạn bản nháp.">
+  <meta name="description"
+    content="Tạo, sửa, lưu trữ mẫu checklist an toàn và dùng Checklist Generator (mô phỏng) để soạn bản nháp.">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="../assets/css/styles.css">
-  <script src="../js/modules/theme.js"></script>
 </head>
-<body data-root=".." data-role="admin" data-scr="10"
-      data-active="admin/admin-checklist-template-management.html"
-      data-title="Quản lý mẫu checklist"
-      data-subtitle="Tạo, sửa, lưu trữ mẫu và soạn bản nháp bằng Checklist Generator (mô phỏng)">
+
+<body data-root=".." data-role="admin" data-scr="10" data-active="admin/admin-checklist-template-management.html"
+  data-title="Quản lý mẫu checklist"
+  data-subtitle="Tạo, sửa, lưu trữ mẫu và soạn bản nháp bằng Checklist Generator (mô phỏng)">
 
   <div class="ss-app">
     <aside id="ssSidebar" class="ss-sidebar"></aside>
     <div class="ss-main">
       <header id="ssTopbar" class="ss-topbar"></header>
       <main class="ss-content">
-        <div class="offcanvas offcanvas-start d-lg-none ss-offcanvas" tabindex="-1" id="ssOffcanvasNav" aria-labelledby="ssOffcanvasTitle">
+        <div class="offcanvas offcanvas-start d-lg-none ss-offcanvas" tabindex="-1" id="ssOffcanvasNav"
+          aria-labelledby="ssOffcanvasTitle">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title ss-offcanvas-title" id="ssOffcanvasTitle">Menu vai trò</h5>
+            <h5 class="offcanvas-title" id="ssOffcanvasTitle" style="color:#fff">Menu vai trò</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Đóng"></button>
           </div>
           <div class="offcanvas-body" id="ssOffcanvasBody"></div>
@@ -36,28 +39,30 @@
             <i class="bi bi-magic ss-ai-spark"></i>
             <div class="flex-grow-1">
               <strong>AI-02 · Sinh bản nháp checklist</strong>
-              <div class="ss-ai-note">Checklist Generator — bộ luật JavaScript trên dữ liệu mẫu, người dùng phải xem lại trước khi lưu</div>
+              <div class="ss-ai-note">Checklist Generator — bộ luật JavaScript trên dữ liệu mẫu, người dùng phải xem lại
+                trước khi lưu</div>
             </div>
             <span class="ss-ai-badge"><i class="bi bi-flask"></i>Mô phỏng</span>
             <button class="btn btn-soft btn-sm" id="aiToggle" type="button">
-              <i class="bi bi-stars me-1"></i>Sinh bản nháp bằng AI
+              <i class="bi bi-stars me-1"></i>Sinh bản nháp
             </button>
           </div>
           <div class="ss-ai-body">
-            <form id="aiForm" class="border rounded-3 p-3 mb-3" style="background:var(--ss-surface);border-color:var(--ss-ai-bd) !important" hidden novalidate>
+            <form id="aiForm" class="border rounded-3 p-3 mb-3" style="background:#fff;border-color:#e6ddf7 !important"
+              hidden novalidate>
               <div class="row g-3">
                 <div class="col-md-4">
                   <label class="form-label small mb-1" for="aiWork">Loại công việc</label>
                   <select class="form-select form-select-sm" id="aiWork"></select>
                 </div>
                 <div class="col-md-4">
-                  <label class="form-label small mb-1" for="aiZone">Khu vực áp dụng (gợi ý)</label>
+                  <label class="form-label small mb-1" for="aiZone">Khu vực áp dụng</label>
                   <select class="form-select form-select-sm" id="aiZone"></select>
                 </div>
                 <div class="col-md-4">
-                  <label class="form-label small mb-1" for="aiCondText">Điều kiện khác (tự nhập)</label>
+                  <label class="form-label small mb-1" for="aiCondText">Điều kiện khác </label>
                   <input class="form-control form-control-sm" id="aiCondText" maxlength="80"
-                         placeholder="Ví dụ: thi công sát tường bao, gió lùa tầng 12">
+                    placeholder="Ví dụ: thi công sát tường bao, gió lùa tầng 12">
                 </div>
                 <div class="col-12">
                   <div class="ss-section-title mb-2">Điều kiện công trường</div>
@@ -85,9 +90,11 @@
                   </div>
                 </div>
                 <div class="col-12 d-flex flex-wrap gap-2">
-                  <button class="btn btn-primary btn-sm" type="submit" id="aiRun"><i class="bi bi-hammer me-1"></i>Sinh bản nháp</button>
+                  <button class="btn btn-primary btn-sm" type="submit" id="aiRun"><i class="bi bi-hammer me-1"></i>Sinh
+                    bản nháp</button>
                   <button class="btn btn-ghost btn-sm" type="button" id="aiCancel">Đóng bảng</button>
-                  <span class="ss-row-meta align-self-center">Đầu vào càng cụ thể, danh mục gợi ý càng sát hiện trường.</span>
+                  <span class="ss-row-meta align-self-center">Đầu vào càng cụ thể, danh mục gợi ý càng sát hiện
+                    trường.</span>
                 </div>
               </div>
             </form>
@@ -118,7 +125,8 @@
                 </select>
               </div>
               <div class="col-12 col-md-2 d-flex align-items-end justify-content-between gap-2">
-                <button class="btn btn-ghost btn-sm" id="clearFilter" type="button"><i class="bi bi-x-lg me-1"></i>Xóa lọc</button>
+                <button class="btn btn-ghost btn-sm" id="clearFilter" type="button"><i class="bi bi-x-lg me-1"></i>Xóa
+                  lọc</button>
                 <span class="ss-row-meta" id="rowCount">—</span>
               </div>
             </div>
@@ -128,11 +136,13 @@
         <div class="card">
           <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
             <span><i class="bi bi-clipboard2-pulse me-1"></i>Danh sách mẫu checklist</span>
-            <button class="btn btn-primary btn-sm" id="newBtn" type="button"><i class="bi bi-plus-lg me-1"></i>Tạo mẫu checklist</button>
+            <button class="btn btn-primary btn-sm" id="newBtn" type="button"><i class="bi bi-plus-lg me-1"></i>Tạo mẫu
+              checklist</button>
           </div>
           <div class="card-body p-0" id="listHost"></div>
           <div class="card-footer small text-muted-soft d-flex flex-wrap gap-2 justify-content-between">
-            <span><i class="bi bi-info-circle me-1"></i>Mẫu đang có lượt kiểm tra mở không thể lưu trữ tùy tiện - hệ thống sẽ cảnh báo và hỏi lại.</span>
+            <span><i class="bi bi-info-circle me-1"></i>Mẫu đang có lượt kiểm tra mở không thể lưu trữ tùy tiện - hệ
+              thống sẽ cảnh báo và hỏi lại.</span>
             <span>Mỗi mẫu tối thiểu 1 mục, tối đa 25 mục.</span>
           </div>
         </div>
@@ -142,7 +152,7 @@
     </div>
   </div>
 
-  <!-- modal tạo / sửa mẫu -->
+
   <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
       <form class="modal-content" id="tplForm" novalidate>
@@ -165,7 +175,8 @@
                   <i class="bi bi-arrow-repeat me-1"></i>Tạo lại mã
                 </button>
               </div>
-              <input class="form-control text-uppercase" id="fCode" maxlength="14" style="font-family:ui-monospace,monospace">
+              <input class="form-control text-uppercase" id="fCode" maxlength="14"
+                style="font-family:ui-monospace,monospace">
               <div class="invalid-feedback" id="fCodeErr">Mã phải dạng MCL-XXX (chữ in hoa, số, dấu gạch nối).</div>
             </div>
             <div class="col-md-4">
@@ -185,10 +196,12 @@
               </div>
               <div class="alert alert-danger py-2 small mb-2" id="itemsErr" hidden></div>
               <div id="itemsHost"></div>
-              <button class="btn btn-soft btn-sm mt-2" id="addItem" type="button"><i class="bi bi-plus-circle me-1"></i>Thêm mục</button>
+              <button class="btn btn-soft btn-sm mt-2" id="addItem" type="button"><i
+                  class="bi bi-plus-circle me-1"></i>Thêm mục</button>
               <div class="small text-muted-soft mt-2">
-                <i class="bi bi-shield-exclamation me-1"></i>Mỗi mục là một nội dung phải nhìn thấy được ngoài hiện trường;
-                mục do AI (mô phỏng) sinh ra chỉ là bản nháp — cán bộ an toàn vẫn phải rà lại.
+                <i class="bi bi-shield-exclamation me-1"></i>Mỗi mục là một nội dung phải nhìn thấy được ngoài hiện
+                trường;
+                mục mô phỏng sinh ra chỉ là bản nháp — cán bộ an toàn vẫn phải rà lại.
               </div>
             </div>
           </div>
@@ -212,7 +225,8 @@
         <div class="modal-body" id="previewBody"></div>
         <div class="modal-footer">
           <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Đóng</button>
-          <button type="button" class="btn btn-primary" id="previewEdit"><i class="bi bi-pencil me-1"></i>Sửa mẫu</button>
+          <button type="button" class="btn btn-primary" id="previewEdit"><i class="bi bi-pencil me-1"></i>Sửa
+            mẫu</button>
         </div>
       </div>
     </div>
@@ -225,4 +239,5 @@
   <script src="../js/modules/ai.js"></script>
   <script src="../js/pages/admin-checklist-template-management.js"></script>
 </body>
+
 </html>
