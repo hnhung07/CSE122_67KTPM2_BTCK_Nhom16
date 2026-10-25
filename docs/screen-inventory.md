@@ -4,7 +4,7 @@
 - **Học phần:** Phát triển ứng dụng Web cơ bản (CSE122) – Đại học Thủy lợi
 - **Nhóm:** 16 · **Mã đề tài:** CSE.TLU-67KTPM2-BTL-Nhom16
 - **Mục đích:** Tài liệu **duyệt phạm vi trước khi code**, là nguồn sự thật cho 12 cột mà barem yêu cầu: `Role · User Goal · User Task · Screen · File · CRUD · States · AI · Assignee · Task ID · Branch · OBS`.
-- **Trạng thái:** Bản đối chiếu barem, cập nhật 20/10/2026.
+- **Trạng thái:** Bản đối chiếu barem, cập nhật 25/10/2026 (thêm COM-05 · chế độ sáng/tối).
 
 **Chú giải cột Branch.** Mã nguồn giai đoạn 1 nằm ở commit baseline `9d35384` trên `main` (nhóm khai báo minh bạch trong README §9.1 vì kho Git lập sau giai đoạn này). Giá trị trong cột `Branch` là **nhánh mang phần việc hoàn thiện tiếp theo của màn đó**, và mọi commit từ nay đều đi qua nhánh → Pull Request → review chéo → merge `--no-ff` vào `dev`.
 
@@ -83,6 +83,7 @@ flowchart LR
 | Mọi vai trò | Đăng nhập bằng tài khoản được cấp | Nhập tên đăng nhập + mật khẩu → đọc luật khi sai → khóa tạm 30s sau 5 lần sai → đổi mật khẩu bắt buộc lần đầu | **COM-02 · Đăng nhập** | `login.html` | R + **U** (đổi mật khẩu) · validation 3 bộ luật | N·E·R | — | SV3 | TASK-09 | `feature/sv1-a11y` | `SV1-04-login.mp4` |
 | Mọi vai trò | Biết vì sao bị chặn và đi tiếp bằng cách nào | Đọc quyền cần có → bấm chuyển vai trò qua màn hình đăng nhập | **COM-03 · Không có quyền** | `403.html` | R + điều hướng | N | — | SV3 | TASK-14 | `feature/sv3-semantic-html` | `SV3-15-error-pages.mp4` |
 | Mọi vai trò | Không bị lạc khi gõ sai đường dẫn | Đọc liên kết gợi ý → quay về trang chủ/đăng nhập | **COM-04 · Không tìm thấy** | `404.html` | R + điều hướng | N | — | SV3 | TASK-14 | `feature/sv3-semantic-html` | `SV3-15-error-pages.mp4` |
+| Mọi vai trò | Đọc thoải mái trong môi trường thiếu sáng | Bấm nút **Tự động → Sáng → Tối** (12 trang ở topbar, 4 trang COM ở thanh điều hướng) → nền, biểu đồ, huy hiệu và bản đồ rủi ro đổi theo → tải lại vẫn giữ lựa chọn | **COM-05 · Chế độ hiển thị** (control xuyên trang, không phải một màn riêng) | `js/modules/theme.js` + khối `[data-theme="dark"]` trong `assets/css/styles.css`; nút gắn vào `renderTopbar()` ở `js/modules/app.js` | **U** (lưu `sitesafe.theme.v3`) · đọc `prefers-color-scheme` · đồng bộ tab qua `storage` | N (3 trạng thái chế độ) | — | SV3 | TASK-10 | `feature/dark-light-mode` | Bật/tắt 3 chế độ trong `SV3-14-index-overview.mp4` |
 
 ### 4.1. Hai màn dùng chung nhóm chủ động KHÔNG xây dựng — lý do và phương án thay thế
 

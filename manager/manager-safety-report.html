@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="../js/modules/theme.js"></script>
 </head>
 <body data-root=".." data-role="manager" data-scr="09"
       data-active="manager/manager-safety-report.html"
@@ -22,7 +23,7 @@
       <main class="ss-content">
         <div class="offcanvas offcanvas-start d-lg-none ss-offcanvas" tabindex="-1" id="ssOffcanvasNav" aria-labelledby="ssOffcanvasTitle">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="ssOffcanvasTitle" style="color:#fff">Menu vai trò</h5>
+            <h5 class="offcanvas-title ss-offcanvas-title" id="ssOffcanvasTitle">Menu vai trò</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Đóng"></button>
           </div>
           <div class="offcanvas-body" id="ssOffcanvasBody"></div>
@@ -45,7 +46,7 @@
                 </button>
               </div>
             </div>
-            <div class="alert small mb-0 mt-3 py-2" style="background:#fdf3dd;border:1px solid #f2dda3;color:#92670a"
+            <div class="alert small mb-0 mt-3 py-2" style="background:var(--ss-tint-amber-bg);border:1px solid var(--ss-tint-amber-bd);color:var(--ss-tint-amber-fg)"
                  role="note" id="simNote">
               <i class="bi bi-hdd me-1"></i>
               <strong>Bản mô phỏng:</strong> mọi con số dưới đây tính từ dữ liệu mẫu dựng sẵn đang lưu trong
@@ -128,7 +129,7 @@
               Hai ô ngày bỏ trống được hiểu là “dữ liệu sớm nhất” và “hôm nay”; tự động chuyển sang chế độ Tùy chọn khi bạn nhập.
             </div>
             <div class="alert small d-none mb-0 mt-3 py-2" id="badRange" role="alert"
-                 style="background:#fde7ea;border:1px solid #f5bfc6;color:#a82d3b">
+                 style="background:var(--ss-tint-red-bg);border:1px solid var(--ss-tint-red-bd);color:var(--ss-tint-red-fg)">
               <i class="bi bi-exclamation-octagon me-1"></i>Ngày bắt đầu lớn hơn ngày kết thúc nên kỳ báo cáo rỗng.
               Vui lòng sửa hai ô “Từ ngày / Đến ngày” hoặc bấm <strong>Đặt lại bộ lọc</strong>.
             </div>

@@ -89,7 +89,7 @@
         '<div class="row g-3">' + SCREENS.filter(function (s) { return s.role === role; }).map(function (s) {
           return '<div class="col-md-6 col-xl-4"><div class="card h-100"><div class="card-body d-flex flex-column">' +
             '<div class="d-flex justify-content-between align-items-center mb-2"><span class="ss-row-code">' + s.id + '</span>' +
-            '<span class="ss-badge" style="background:#eef4ff;color:#2b5da8;border:1px solid #cddffb">' + s.crud + '</span></div>' +
+            '<span class="ss-badge ss-badge-blue">' + s.crud + '</span></div>' +
             '<h3 class="h6">' + A.esc(s.name) + '</h3><p class="small text-muted-soft flex-grow-1">' + A.esc(s.note) + '</p>' +
             '<div class="d-flex gap-2"><a class="btn btn-primary btn-sm" href="' + s.file + '" data-role-enter="' + s.role + '"><i class="bi bi-box-arrow-up-right me-1"></i>Mở màn hình</a>' +
             '<code class="small text-muted-soft align-self-center">' + s.file.split('/')[0] + '/…</code></div>' +

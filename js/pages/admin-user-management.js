@@ -51,10 +51,10 @@
     }).length;
     var cards = [
       { v: all.length, l: 'Tổng tài khoản', i: 'people', c: 'var(--ss-teal-700)' },
-      { v: active.length, l: 'Đang hoạt động', i: 'person-check', c: '#2fa36b' },
-      { v: all.length - active.length, l: 'Đã vô hiệu hóa', i: 'person-dash', c: '#6a6f78' },
-      { v: adminActive.length + '/' + admins.length, l: 'Quản trị viên hoạt động', i: 'shield-lock', c: '#2b5da8' },
-      { v: recent, l: 'Đăng nhập trong 3 ngày', i: 'clock-history', c: '#b0521b' }
+      { v: active.length, l: 'Đang hoạt động', i: 'person-check', c: 'var(--ss-lv-thap)' },
+      { v: all.length - active.length, l: 'Đã vô hiệu hóa', i: 'person-dash', c: 'var(--ss-ink-soft)' },
+      { v: adminActive.length + '/' + admins.length, l: 'Quản trị viên hoạt động', i: 'shield-lock', c: 'var(--ss-tint-blue-fg)' },
+      { v: recent, l: 'Đăng nhập trong 3 ngày', i: 'clock-history', c: 'var(--ss-tint-orange-fg)' }
     ];
     document.getElementById('kpis').innerHTML = cards.map(function (c) {
       return '<div class="col-6 col-xl-2"><div class="card h-100"><div class="card-body ss-kpi">' +
@@ -69,7 +69,7 @@
       var total = byRole[r.id] || 0, on = byRoleActive[r.id] || 0;
       var danger = r.id === 'admin' && on === 0;
       return '<button type="button" class="ss-chip" data-role="' + r.id + '" title="Lọc theo vai trò ' + A.esc(r.name) + '"' +
-        (danger ? ' style="border-color:#f5bfc6;color:#a82d3b"' : '') + '>' +
+        (danger ? ' style="border-color:var(--ss-tint-red-bd);color:var(--ss-tint-red-fg)"' : '') + '>' +
         '<i class="bi bi-person-badge"></i>' + A.esc(r.name) +
         ' <span class="fw-bold">' + on + '/' + total + '</span></button>';
     }).join('') + '<span class="ss-row-meta align-self-center ms-auto">Tỉ lệ đang hoạt động / tổng số theo vai trò (store.tally).</span>';
@@ -128,7 +128,7 @@
       (self ? ' <span class="ss-badge" style="background:var(--ss-teal-50);color:var(--ss-teal-800);border:1px solid var(--ss-teal-100)">bạn đang dùng</span>' : '') + '</div>' +
       '<div class="ss-row-meta text-truncate" style="max-width:260px">' + A.esc(u.email) + '</div>' +
       '<div class="ss-row-meta"><i class="bi bi-person me-1"></i><code>' + A.esc(u.username || '—') + '</code>' +
-      (u.mustChange ? ' <span class="ss-badge" style="background:#fdf3dd;color:#92670a;border:1px solid #f2dda3">buộc đổi mật khẩu</span>' : '') + '</div>' +
+      (u.mustChange ? ' <span class="ss-badge ss-badge-amber">buộc đổi mật khẩu</span>' : '') + '</div>' +
       '<div class="ss-row-meta d-lg-none">' + A.esc(u.unit) + '</div></div></div></td>' +
       '<td><span class="ss-chip" style="font-size:.76rem">' + A.esc(roleName(u.role)) + '</span></td>' +
       '<td class="small d-none d-lg-table-cell">' + A.esc(u.unit) + '</td>' +

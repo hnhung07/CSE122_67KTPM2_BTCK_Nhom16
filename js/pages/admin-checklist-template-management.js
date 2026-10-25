@@ -86,10 +86,10 @@
     var openRunCount = store.list('runs').filter(function (r) { return r.status !== 'Hoàn tất'; }).length;
     var cards = [
       { v: all.length, l: 'Tổng số mẫu', i: 'clipboard2-pulse', c: 'var(--ss-teal-700)' },
-      { v: active.length, l: 'Đang dùng', i: 'check2-circle', c: '#2fa36b' },
-      { v: all.length - active.length, l: 'Đã lưu trữ', i: 'archive', c: '#6a6f78' },
-      { v: items, l: 'Tổng mục kiểm tra', i: 'list-ol', c: '#2b5da8' },
-      { v: openRunCount, l: 'Lượt kiểm tra đang mở', i: 'hourglass-split', c: '#b0521b' }
+      { v: active.length, l: 'Đang dùng', i: 'check2-circle', c: 'var(--ss-lv-thap)' },
+      { v: all.length - active.length, l: 'Đã lưu trữ', i: 'archive', c: 'var(--ss-ink-soft)' },
+      { v: items, l: 'Tổng mục kiểm tra', i: 'list-ol', c: 'var(--ss-tint-blue-fg)' },
+      { v: openRunCount, l: 'Lượt kiểm tra đang mở', i: 'hourglass-split', c: 'var(--ss-tint-orange-fg)' }
     ];
     document.getElementById('kpis').innerHTML = cards.map(function (c) {
       return '<div class="col-6 col-xl-2"><div class="card h-100"><div class="card-body ss-kpi">' +
@@ -488,7 +488,7 @@
       '<div class="ss-ai-bar"><span style="width:' + pct + '%"></span></div>' +
       '<span class="small">' + pct + '%</span></div>' +
       '<ul class="ss-ai-reason ps-3 mb-2">' + aiDraft.reasons.map(function (r) { return '<li>' + A.esc(r) + '</li>'; }).join('') + '</ul>' +
-      '<div class="alert small mb-3" style="background:#f7f3ff;border:1px solid #e2d7f5;color:#4a3f5c">' +
+      '<div class="alert small mb-3" style="background:var(--ss-ai-a);border:1px solid var(--ss-ai-bd);color:var(--ss-ai-reason)">' +
       '<i class="bi bi-exclamation-triangle me-1"></i>' + A.esc(aiDraft.disclaimer) +
       ' Bản nháp <strong>chưa phải mẫu chính thức</strong>: bỏ chọn mục không phù hợp, sửa câu chữ rồi hãy lưu.</div>' +
       '<div class="d-flex flex-wrap gap-2 align-items-center mb-2">' +

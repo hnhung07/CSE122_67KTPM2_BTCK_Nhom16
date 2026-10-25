@@ -70,7 +70,7 @@ Cập nhật bảng này trong quá trình làm; không điền trạng thái ho
 | Mã task | Đầu việc | Người phụ trách | Nhánh/PR | Hạn | Trạng thái | OBS |
 |---|---|---|---|---|---|---|
 | TASK-01 | Chốt bảng kiểm kê màn hình và luồng người dùng | Cả nhóm | Chưa tạo | 21/10/2026 | Hoàn thành | Chưa có |
-| TASK-02 | Hoàn thiện luồng checklist và báo hazard (SCR-01→03) | SV1 | Chưa tạo (repo chưa khởi tạo Git) | 21/10/2026 | Hoàn thành code, đã tự kiểm thử | Chưa có |
+| TASK-02 | Hoàn thiện luồng checklist và báo hazard (SCR-01→03) | SV1 | Nằm trong commit baseline `9d35384` (khai báo ở README §9.1); PR riêng chưa có | 21/10/2026 | Hoàn thành code, đã tự kiểm thử | Chưa có |
 | TASK-03 | Hoàn thiện luồng review hazard/inspection (SCR-04→06) | SV2 | Chưa tạo | 21/10/2026 | Hoàn thành code, đã tự kiểm thử | Chưa có |
 | TASK-04 | Hoàn thiện luồng manager/admin (SCR-07→12) | SV3 | Chưa tạo | 21/10/2026 | Hoàn thành code, đã tự kiểm thử | Chưa có |
 | TASK-05 | Tích hợp dữ liệu JSON/LocalStorage | Cả nhóm; SV3 điều phối | Chưa tạo | 21/10/2026 | Hoàn thành (seed + `store.js`, khóa `sitesafe.db.v3`) | Chưa có |
@@ -78,6 +78,7 @@ Cập nhật bảng này trong quá trình làm; không điền trạng thái ho
 | TASK-07 | Kiểm thử responsive và luồng liên vai trò | Review chéo | Chưa tạo | 21/10/2026 | Đã kiểm thử luồng liên vai trò trên desktop; chưa kiểm thử thủ công tablet/mobile | Chưa có |
 | TASK-08 | OBS, cập nhật README và tài liệu cuối | Từng người + người tích hợp | Chưa tạo | Chưa chốt | Đang làm (README + các bảng tài liệu đã cập nhật; video chưa ghi) | Chưa có |
 | TASK-09 | Tầng đăng nhập theo tài khoản: tên đăng nhập + mật khẩu, luật đặt, khóa tạm, buộc đổi mật khẩu | SV3 (code `store.js`/`login.html`/SCR-12), cả nhóm dùng | Chưa tạo | 21/10/2026 | Hoàn thành, đã kiểm chứng 10/10 tài khoản seed + luồng khóa/đổi mật khẩu; luật ghi ở `roles-and-features.md` §3.1 và README §7 | Chưa có |
+| TASK-10 | Chế độ sáng/tối cho 16 trang: `js/modules/theme.js`, khối token `[data-theme="dark"]` (bảng "Mực trầm"), nút Tự động/Sáng/Tối, khóa `sitesafe.theme.v3` | SV3 nền tảng; cả nhóm rà trang của mình ở nền tối | Nhánh `feature/dark-light-mode` **chưa tạo** — mã đã hoàn thành và đo tương phản 0/195 lỗi ở nền tối, chờ commit qua PR | 25/10/2026 | Hoàn thành code + tài liệu (`design/component-guide.md` §1, README §5/§7/§8); chưa commit, chưa quay OBS | Chưa có |
 
 Ba luồng liên vai trò đã chạy thông trên trình duyệt ngày 21/10/2026:
 

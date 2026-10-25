@@ -191,13 +191,13 @@
     var cards = [
       { v: hz.length, l: 'Tổng báo cáo trong kỳ', i: 'file-earmark-text', c: 'var(--ss-teal-800)',
         spark: C.sparkline(scope.buckets.map(function (b) { return b.count; }), C.SERIES[0]) },
-      { v: open.length, l: 'Đang mở (chưa đóng/từ chối)', i: 'exclamation-diamond', c: '#2b5da8' },
-      { v: critical.length, l: 'Mức Nghiêm trọng', i: 'fire', c: '#a82d3b' },
-      { v: closed.length, l: 'Đã đóng', i: 'patch-check', c: '#1d7a4c' },
-      { v: (hz.length ? Math.round(closed.length / hz.length * 100) : 0) + '%', l: 'Tỷ lệ đóng', i: 'percent', c: '#1d7a4c' },
-      { v: late.length, l: 'Hành động quá hạn', i: 'alarm', c: '#a82d3b' },
+      { v: open.length, l: 'Đang mở (chưa đóng/từ chối)', i: 'exclamation-diamond', c: 'var(--ss-tint-blue-fg)' },
+      { v: critical.length, l: 'Mức Nghiêm trọng', i: 'fire', c: 'var(--ss-tint-red-fg)' },
+      { v: closed.length, l: 'Đã đóng', i: 'patch-check', c: 'var(--ss-tint-green-fg)' },
+      { v: (hz.length ? Math.round(closed.length / hz.length * 100) : 0) + '%', l: 'Tỷ lệ đóng', i: 'percent', c: 'var(--ss-tint-green-fg)' },
+      { v: late.length, l: 'Hành động quá hạn', i: 'alarm', c: 'var(--ss-tint-red-fg)' },
       { v: insp.length, l: 'Đợt kiểm tra trong kỳ', i: 'calendar2-check', c: 'var(--ss-teal-700)' },
-      { v: (insp.length ? (findings / insp.length).toFixed(1) : '0.0'), l: 'Mục ghi nhận / đợt', i: 'list-ol', c: '#b0521b' }
+      { v: (insp.length ? (findings / insp.length).toFixed(1) : '0.0'), l: 'Mục ghi nhận / đợt', i: 'list-ol', c: 'var(--ss-tint-orange-fg)' }
     ];
     set('kpis', cards.map(kpiCard).join(''));
     setText('matchCount', hz.length + '/' + store.list('hazards').length + ' báo cáo · ' +

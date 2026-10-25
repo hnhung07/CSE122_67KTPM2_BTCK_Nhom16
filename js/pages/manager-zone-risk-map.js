@@ -17,6 +17,10 @@
     { level: 'Thấp', label: 'Rủi ro thấp', color: '#2fa36b' },
     { level: 'An toàn', label: 'Chưa ghi nhận nguy cơ', color: '#1ba99c' }
   ];
+  var BADGE_CLS = {
+    'Nghiêm trọng': 'ss-badge-red', 'Cao': 'ss-badge-orange', 'Trung bình': 'ss-badge-amber',
+    'Thấp': 'ss-badge-green', 'An toàn': 'ss-badge-soft'
+  };
 
   var s = { q: '', band: '', period: 30, heat: true, onlyOpen: false, onlyCritical: false, zone: '', cell: '', pin: '' };
 
@@ -83,10 +87,10 @@
     var onTime = acts.filter(function (a) { return !store.isOverdue(a); }).length;
     var cards = [
       { v: zs.length, l: 'Khu vực hoạt động', i: 'map', c: 'var(--ss-teal-700)' },
-      { v: zs.reduce(function (t, x) { return t + x.open.length; }, 0), l: 'Nguy cơ đang mở', i: 'exclamation-diamond', c: '#b0521b' },
-      { v: zs.filter(function (x) { return x.band.level === 'Nghiêm trọng' || x.band.level === 'Cao'; }).length, l: 'Vùng rủi ro cao', i: 'fire', c: '#a82d3b' },
-      { v: acts.length - onTime, l: 'Hành động quá hạn', i: 'alarm', c: '#a82d3b' },
-      { v: (acts.length ? Math.round(onTime / acts.length * 100) : 100) + '%', l: 'Đúng hạn', i: 'stopwatch', c: '#1d7a4c' }
+      { v: zs.reduce(function (t, x) { return t + x.open.length; }, 0), l: 'Nguy cơ đang mở', i: 'exclamation-diamond', c: 'var(--ss-tint-orange-fg)' },
+      { v: zs.filter(function (x) { return x.band.level === 'Nghiêm trọng' || x.band.level === 'Cao'; }).length, l: 'Vùng rủi ro cao', i: 'fire', c: 'var(--ss-tint-red-fg)' },
+      { v: acts.length - onTime, l: 'Hành động quá hạn', i: 'alarm', c: 'var(--ss-tint-red-fg)' },
+      { v: (acts.length ? Math.round(onTime / acts.length * 100) : 100) + '%', l: 'Đúng hạn', i: 'stopwatch', c: 'var(--ss-tint-green-fg)' }
     ];
     document.getElementById('kpis').innerHTML = cards.map(function (c) {
       return '<div class="col-6 col-xl-2"><div class="card h-100"><div class="card-body ss-kpi">' +
@@ -145,7 +149,7 @@
       return '<span class="d-inline-flex align-items-center gap-1"><span class="ss-swatch" style="background:' + b.color + '"></span>' +
         b.label + ' <strong>' + n + '</strong></span>';
     }).join('') +
-      '<span class="d-inline-flex align-items-center gap-1"><span style="color:#d94f5c">●</span> số vòng tròn = nguy cơ Nghiêm trọng</span>';
+      '<span class="d-inline-flex align-items-center gap-1"><span style="color:var(--ss-lv-nt)">●</span> số vòng tròn = nguy cơ Nghiêm trọng</span>';
 
     document.querySelectorAll('#mapHost [data-zone]').forEach(function (g) {
       g.addEventListener('click', function () { select(g.getAttribute('data-zone')); });
@@ -186,12 +190,12 @@
       '<button class="btn btn-ghost btn-sm py-0" id="closeZone" aria-label="Đóng bảng chi tiết khu vực"><i class="bi bi-x-lg"></i></button></div>' +
       '<div class="card-body">' +
       '<div class="d-flex flex-wrap gap-2 align-items-center mb-2">' +
-      '<span class="ss-badge" style="background:' + (C.LEVEL_COLOR[st.band.level]) + '20;color:' + C.LEVEL_COLOR[st.band.level] + ';border:1px solid ' + C.LEVEL_COLOR[st.band.level] + '55">' +
+      '<span class="ss-badge ' + (BADGE_CLS[st.band.level] || 'ss-badge-neutral') + '">' +
       A.esc(st.band.label) + '</span>' +
       A.levelBadge(st.band.level) +
       '<span class="ss-chip"><i class="bi bi-speedometer2"></i>điểm ' + st.score + '</span>' +
       '<span class="ss-chip"><i class="bi bi-clipboard2-pulse"></i>' + st.open.length + '/' + st.hazards.length + ' đang mở</span>' +
-      (st.overdue.length ? '<span class="ss-chip" style="color:#a82d3b;border-color:#f5bfc6"><i class="bi bi-alarm"></i>' + st.overdue.length + ' quá hạn</span>' : '') +
+      (st.overdue.length ? '<span class="ss-chip" style="color:var(--ss-tint-red-fg);border-color:var(--ss-tint-red-bd)"><i class="bi bi-alarm"></i>' + st.overdue.length + ' quá hạn</span>' : '') +
       '</div>' +
       '<div class="row g-2 small mb-3"><div class="col-6"><span class="ss-row-meta d-block">Mã khu vực</span><strong>' + A.esc(z.code) + '</strong></div>' +
       '<div class="col-6"><span class="ss-row-meta d-block">Phụ trách</span><strong>' + A.esc(z.head || '—') + '</strong></div>' +
@@ -221,7 +225,7 @@
   function rankRow(st) {
     return '<button class="btn btn-ghost btn-sm text-start w-100 mb-1 d-flex justify-content-between align-items-center" data-pick="' + st.zoneId + '">' +
       '<span class="min-w-0 text-truncate">' + A.esc(st.zone.name) + '</span>' +
-      '<span class="ss-badge" style="background:' + C.LEVEL_COLOR[st.band.level] + '20;color:' + C.LEVEL_COLOR[st.band.level] + '">' + st.score + '</span></button>';
+      '<span class="ss-badge ' + (BADGE_CLS[st.band.level] || 'ss-badge-neutral') + '">' + st.score + '</span></button>';
   }
 
   function ranked() {

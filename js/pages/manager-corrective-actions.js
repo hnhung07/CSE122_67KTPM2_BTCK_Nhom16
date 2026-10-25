@@ -59,11 +59,11 @@
     var avg = open.length ? Math.round(open.reduce(function (t, a) { return t + a.progress; }, 0) / open.length) : 0;
     var cards = [
       { v: all.length, l: 'Tổng hành động', i: 'list-task', c: 'var(--ss-teal-700)' },
-      { v: open.length, l: 'Chưa hoàn thành', i: 'hourglass-split', c: '#2b5da8' },
-      { v: late.length, l: 'Quá hạn', i: 'alarm', c: '#a82d3b' },
-      { v: wait.length, l: 'Chờ tôi xác nhận', i: 'hand-thumbs-up', c: '#92670a' },
-      { v: avg + '%', l: 'Tiến độ trung bình', i: 'graph-up-arrow', c: '#b0521b' },
-      { v: doneRate + '%', l: 'Tỷ lệ đóng việc', i: 'patch-check', c: '#1d7a4c' }
+      { v: open.length, l: 'Chưa hoàn thành', i: 'hourglass-split', c: 'var(--ss-tint-blue-fg)' },
+      { v: late.length, l: 'Quá hạn', i: 'alarm', c: 'var(--ss-tint-red-fg)' },
+      { v: wait.length, l: 'Chờ tôi xác nhận', i: 'hand-thumbs-up', c: 'var(--ss-tint-amber-fg)' },
+      { v: avg + '%', l: 'Tiến độ trung bình', i: 'graph-up-arrow', c: 'var(--ss-tint-orange-fg)' },
+      { v: doneRate + '%', l: 'Tỷ lệ đóng việc', i: 'patch-check', c: 'var(--ss-tint-green-fg)' }
     ];
     document.getElementById('kpis').innerHTML = cards.map(function (c) {
       return '<div class="col-6 col-xl-2"><div class="card h-100"><div class="card-body ss-kpi">' +

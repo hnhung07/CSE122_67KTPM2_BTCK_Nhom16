@@ -117,6 +117,7 @@ Có thể có trạng thái `Quá hạn` được tính từ hạn xử lý và 
 - Mỗi trang có tiêu đề, điều hướng và phản hồi thao tác nhất quán.
 - Các biểu mẫu phải kiểm tra trường bắt buộc và hiển thị lỗi dễ hiểu.
 - Danh sách phải có trạng thái rỗng; bộ lọc không có kết quả phải được thông báo.
+- Mọi trang hiển thị đúng ở cả nền sáng và nền tối (nút **Tự động / Sáng / Tối** ở thanh trên); trạng thái hiển thị là tùy chọn cá nhân, **không** lưu cùng dữ liệu nghiệp vụ.
 - Thao tác lưu, cập nhật, đóng hoặc lưu trữ phải phản ánh lên dữ liệu mô phỏng.
 - Dữ liệu nguy cơ và đề xuất AI chỉ phục vụ nguyên mẫu học tập, không thay thế đánh giá an toàn thực tế.
 

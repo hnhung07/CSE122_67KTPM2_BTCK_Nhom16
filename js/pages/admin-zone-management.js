@@ -69,11 +69,11 @@
     });
     var cards = [
       { v: all.length, l: 'Tổng khu vực', i: 'map', c: 'var(--ss-teal-700)' },
-      { v: active.length, l: 'Đang hoạt động', i: 'check2-circle', c: '#2fa36b' },
-      { v: all.length - active.length, l: 'Đã ngừng', i: 'stop-circle', c: '#6a6f78' },
-      { v: openHaz, l: 'Nguy cơ đang mở', i: 'exclamation-triangle', c: '#b0521b' },
-      { v: high, l: 'Khu vực rủi ro cao', i: 'fire', c: '#a82d3b' },
-      { v: overdue, l: 'Hành động quá hạn', i: 'alarm', c: '#d94f5c' }
+      { v: active.length, l: 'Đang hoạt động', i: 'check2-circle', c: 'var(--ss-lv-thap)' },
+      { v: all.length - active.length, l: 'Đã ngừng', i: 'stop-circle', c: 'var(--ss-ink-soft)' },
+      { v: openHaz, l: 'Nguy cơ đang mở', i: 'exclamation-triangle', c: 'var(--ss-tint-orange-fg)' },
+      { v: high, l: 'Khu vực rủi ro cao', i: 'fire', c: 'var(--ss-tint-red-fg)' },
+      { v: overdue, l: 'Hành động quá hạn', i: 'alarm', c: 'var(--ss-lv-nt)' }
     ];
     document.getElementById('kpis').innerHTML = cards.map(function (c) {
       return '<div class="col-6 col-xl-2"><div class="card h-100"><div class="card-body ss-kpi">' +
@@ -220,7 +220,7 @@
     document.getElementById('mapHost').innerHTML = mapSvg(zones, null);
     document.getElementById('mapLegend').innerHTML = ['Nghiêm trọng', 'Cao', 'Trung bình', 'Thấp', 'An toàn'].map(function (lv) {
       return '<span><span class="ss-swatch" style="background:' + FILL[lv] + '"></span>' + A.esc(lv) + '</span>';
-    }).join('') + '<span><span class="ss-swatch" style="background:#b9c8c6"></span>Đã ngừng hoạt động</span>' +
+    }).join('') + '<span><span class="ss-swatch" style="background:var(--ss-tint-neutral-bd)"></span>Đã ngừng hoạt động</span>' +
       '<span class="ms-auto">Bấm một khối trên sơ đồ để mở biểu mẫu sửa khu vực đó.</span>';
     bind('#mapHost [data-zid]', function (el) { openForm(el.getAttribute('data-zid')); });
   }
