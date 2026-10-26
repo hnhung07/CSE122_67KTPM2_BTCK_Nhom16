@@ -52,10 +52,10 @@
     var findings = all.reduce(function (s, i) { return s + (+i.findingsCount || 0); }, 0);
     var cards = [
       { v: all.length, l: 'Tổng đợt kiểm tra', i: 'calendar3', c: 'var(--ss-teal-700)' },
-      { v: open.length, l: 'Đang mở', i: 'play-circle', c: '#2b5da8' },
+      { v: open.length, l: 'Đang mở', i: 'play-circle', c: 'var(--ss-tint-blue-fg)' },
       { v: today.length, l: 'Diễn ra hôm nay', i: 'sunrise', c: 'var(--ss-teal-800)' },
-      { v: stale.length, l: 'Chưa đóng quá hạn', i: 'alarm', c: '#a82d3b' },
-      { v: findings, l: 'Mục ghi nhận', i: 'list-ol', c: '#b0521b' }
+      { v: stale.length, l: 'Chưa đóng quá hạn', i: 'alarm', c: 'var(--ss-tint-red-fg)' },
+      { v: findings, l: 'Mục ghi nhận', i: 'list-ol', c: 'var(--ss-tint-orange-fg)' }
     ];
     document.getElementById('kpis').innerHTML = cards.map(function (c) {
       return '<div class="col-6 col-xl-2"><div class="card h-100"><div class="card-body ss-kpi">' +
@@ -75,7 +75,7 @@
     }
     host.innerHTML = '<ul class="ss-ai-reason ps-3 mb-2">' + insight.narrative.map(function (t) { return '<li>' + A.esc(t) + '</li>'; }).join('') + '</ul>' +
       '<div class="d-flex flex-wrap gap-1 mb-2">' + insight.hotspots.slice(0, 4).map(function (h) {
-        return '<span class="ss-badge" style="background:#fdeade;color:#b0521b;border:1px solid #f8cfae">' + A.esc(h.name) + ' · ' + h.score + '</span>';
+        return '<span class="ss-badge ss-badge-orange">' + A.esc(h.name) + ' · ' + h.score + '</span>';
       }).join('') + '</div>' +
       '<div class="small text-muted-soft">' + A.esc(insight.suggestions[0]) + ' ' + A.esc(insight.disclaimer) + '</div>';
   }
