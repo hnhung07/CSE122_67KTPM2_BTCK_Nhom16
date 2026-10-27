@@ -38,8 +38,8 @@
     }).join('');
     host.innerHTML = '<div class="d-flex flex-wrap align-items-center gap-3">' +
       '<svg viewBox="0 0 140 140" style="width:140px;height:140px;flex:0 0 140px">' + segs +
-      '<text x="70" y="66" text-anchor="middle" font-size="22" font-weight="700" style="fill:var(--ss-chart-ink)">' + total + '</text>' +
-      '<text x="70" y="84" text-anchor="middle" font-size="10" style="fill:var(--ss-chart-ink-soft)">' + esc(opts.centerLabel || 'Bản ghi') + '</text></svg>' +
+      '<text x="70" y="66" text-anchor="middle" font-size="22" font-weight="700" fill="#10333a">' + total + '</text>' +
+      '<text x="70" y="84" text-anchor="middle" font-size="10" fill="#4b6a72">' + esc(opts.centerLabel || 'Bản ghi') + '</text></svg>' +
       '<div class="flex-grow-1" style="min-width:150px">' + legend + '</div></div>';
   }
 
@@ -79,10 +79,10 @@
     host.innerHTML = '<svg viewBox="0 0 ' + w + ' ' + h + '" class="w-100" preserveAspectRatio="none" style="min-height:130px">' +
       '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1ba99c" stop-opacity=".35"/>' +
       '<stop offset="100%" stop-color="#1ba99c" stop-opacity=".02"/></linearGradient></defs>' +
-      [0.25, 0.5, 0.75].map(function (g) { return '<line x1="' + pad + '" x2="' + (w - pad) + '" y1="' + (h * g) + '" y2="' + (h * g) + '" style="stroke:var(--ss-chart-grid)" stroke-dasharray="3 4"/>'; }).join('') +
-      '<path d="' + areaPath + '" fill="url(#' + gid + ')"/><path d="' + line + '" fill="none" style="stroke:var(--ss-teal-600)" stroke-width="2.5" stroke-linejoin="round"/>' +
+      [0.25, 0.5, 0.75].map(function (g) { return '<line x1="' + pad + '" x2="' + (w - pad) + '" y1="' + (h * g) + '" y2="' + (h * g) + '" stroke="#d9e8e6" stroke-dasharray="3 4"/>'; }).join('') +
+      '<path d="' + areaPath + '" fill="url(#' + gid + ')"/><path d="' + line + '" fill="none" stroke="#158b81" stroke-width="2.5" stroke-linejoin="round"/>' +
       xy.map(function (p, i) {
-        return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3.5" style="fill:var(--ss-chart-dot);stroke:var(--ss-teal-600)" stroke-width="2">' +
+        return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3.5" fill="#fff" stroke="#158b81" stroke-width="2">' +
           '<title>' + esc(points[i].label) + ': ' + points[i].value + '</title></circle>';
       }).join('') + '</svg>' +
       '<div class="d-flex justify-content-between small text-muted-soft mt-1"><span>' + esc(points[0].label) + '</span><span>' + esc(points[points.length - 1].label) + '</span></div>';
@@ -99,9 +99,9 @@
         var key = lk + '-' + impact;
         var n = (cells || {})[key] || 0;
         var score = lk * impact;
-        var bg = score >= 15 ? 'var(--ss-lv-nt)' : score >= 9 ? 'var(--ss-lv-cao)' : score >= 5 ? 'var(--ss-lv-tb)' : 'var(--ss-lv-thap)';
+        var bg = score >= 15 ? '#d94f5c' : score >= 9 ? '#ef7b3d' : score >= 5 ? '#e0a410' : '#2fa36b';
         var clickable = opts.onCell && n > 0;
-        html += '<button type="button" class="cell' + (n ? '' : ' empty') + '"' + (n ? ' style="background:' + bg + '"' : '') +
+        html += '<button type="button" class="cell' + (n ? '' : ' empty') + '" style="background:' + (n ? bg : '#edf3f2') + ';color:' + (n ? '#fff' : '#93a8a5') + '"' +
           (clickable ? ' data-cell="' + key + '" aria-label="Khả năng ' + lk + ', hậu quả ' + impact + ': ' + n + ' nguy cơ"' : ' disabled aria-label="Ô trống"') + '>' +
           (n || '') + '</button>';
       }

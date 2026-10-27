@@ -125,7 +125,7 @@
     if (r.loading) return '<div class="ss-loading"><div class="spinner-border spinner-border-sm text-primary"></div>Đang đối chiếu 12 nhóm quy tắc…</div>';
     var low = r.result.needHumanReview;
     return '<div class="d-flex flex-wrap gap-2 mb-2 align-items-center">' +
-      '<span class="ss-badge" style="background:#eae7fb;color:#5a3fa0;border:1px solid #d3caf6">' + A.esc(r.result.category) + '</span>' +
+      '<span class="ss-badge ss-badge-violet">' + A.esc(r.result.category) + '</span>' +
       A.levelBadge(r.result.level) + A.priBadge(r.result.priority) +
       (low ? '<span class="ss-badge ss-st-Cầnbổsungthôngtin"><i class="bi bi-exclamation-triangle"></i>Cần người đánh giá</span>' : '') +
       '</div>' +

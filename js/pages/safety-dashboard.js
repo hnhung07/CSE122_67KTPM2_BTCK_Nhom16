@@ -36,12 +36,12 @@
     var done = s.closed;
     var total = s.hazards;
     var cards = [
-      { v: s.open, l: 'Nguy cơ đang mở', i: 'exclamation-diamond', c: '#b0521b' },
-      { v: s.awaitingReview, l: 'Chờ tôi xem xét', i: 'inbox', c: '#2b5da8' },
-      { v: s.criticalOpen, l: 'Mức Nghiêm trọng', i: 'fire', c: '#a82d3b' },
-      { v: s.actionsOverdue, l: 'Hành động quá hạn', i: 'alarm', c: '#a82d3b' },
+      { v: s.open, l: 'Nguy cơ đang mở', i: 'exclamation-diamond', c: 'var(--ss-tint-orange-fg)' },
+      { v: s.awaitingReview, l: 'Chờ tôi xem xét', i: 'inbox', c: 'var(--ss-tint-blue-fg)' },
+      { v: s.criticalOpen, l: 'Mức Nghiêm trọng', i: 'fire', c: 'var(--ss-tint-red-fg)' },
+      { v: s.actionsOverdue, l: 'Hành động quá hạn', i: 'alarm', c: 'var(--ss-tint-red-fg)' },
       { v: s.inspectionsOpen, l: 'Đợt kiểm tra đang mở', i: 'calendar2-check', c: 'var(--ss-teal-700)' },
-      { v: (total ? Math.round(done / total * 100) : 0) + '%', l: 'Tỷ lệ đã đóng', i: 'patch-check', c: '#1d7a4c' }
+      { v: (total ? Math.round(done / total * 100) : 0) + '%', l: 'Tỷ lệ đã đóng', i: 'patch-check', c: 'var(--ss-tint-green-fg)' }
     ];
     document.getElementById('kpis').innerHTML = cards.map(function (c) {
       return '<div class="col-6 col-lg-2"><div class="card h-100"><div class="card-body ss-kpi">' +
@@ -173,7 +173,7 @@
     host.innerHTML = rows.slice(0, 6).map(function (a) {
       var late = -A.daysTo(a.dueDate);
       return '<div class="d-flex gap-2 align-items-start border-bottom py-2" style="border-color:var(--ss-line)">' +
-        '<span class="ss-item-num" style="background:#fde7ea;color:#a82d3b">' + late + '</span>' +
+        '<span class="ss-item-num ss-badge-red">' + late + '</span>' +
         '<div class="flex-grow-1"><div class="small fw-semibold">' + A.esc(a.title) + '</div>' +
         '<div class="ss-row-meta">' + A.esc(a.code) + ' · ' + A.esc(store.userName(a.ownerId)) + ' · hạn ' + A.date(a.dueDate) + '</div></div>' +
         '<a class="btn btn-ghost btn-sm" href="../manager/manager-corrective-actions.html?focus=' + a.id + '" title="Mở bảng hành động"><i class="bi bi-box-arrow-up-right"></i></a></div>';
